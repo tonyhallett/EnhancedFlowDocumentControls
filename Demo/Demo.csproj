@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFrameworks>net46;net461;net471;net472;net48</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Demo</RootNamespace>
+    <AssemblyName>Demo</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DemoCommon\DemoCommon.csproj" />
+    <ProjectReference Include="..\EnhancedFlowDocumentControls\EnhancedFlowDocumentControls.csproj" />
+  </ItemGroup>
+</Project>
