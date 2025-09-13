@@ -10,18 +10,19 @@ namespace VideoRecorder
         public static List<IStep> GetSteps()
         {
             List<IStep> steps = [
-             ClickFindButtonStep(),
-              ..InputTextSteps("FlowDocumentReader"),
-              ..NavigateAndToggleMatchCaseShowMenuAndSearch(3),
-              ..SwitchPaletteShowMenuSteps(),
-
+             ClickFindButton(),
+              ..InputText("FlowDocumentReader"),
+              ..TabToMenuSelectMatchCase(3),
+                s_openMenuWithClick,
+              ..NavigateToSearchForwardAndPress(),
+              ..SwitchPaletteAndShowMenuWithMouseMoveAndClicks(),
               KeepAlive(2000)];
             return steps;
         }
 
         private static SimpleStep KeepAlive(int duration) => new(_ => { }, duration);
 
-        private static SimpleStep ClickFindButtonStep()
+        private static SimpleStep ClickFindButton()
             => new(
                 window =>
                 {
@@ -30,7 +31,7 @@ namespace VideoRecorder
                 },
                 1000);
 
-        private static List<SimpleStep> InputTextSteps(string text)
+        private static List<SimpleStep> InputText(string text)
         {
             List<SimpleStep> steps = [
                 new SimpleStep(
@@ -40,39 +41,33 @@ namespace VideoRecorder
                         findTextBox!.Focus();
                     },
                     1000),
-                ..TypeWordSteps(text, 100)
+                ..TypeWord(text, 100)
             ];
             return steps;
         }
 
-        private static IEnumerable<SimpleStep> TypeWordSteps(string word, int keyDelay)
+        private static IEnumerable<SimpleStep> TypeWord(string word, int keyDelay)
             => Typer.TypeWord(word).Select(action => new SimpleStep(_ => action(), keyDelay));
 
-        private static readonly IStep s_openMenuWithClickStep = new MouseMoveClickStep(window => ControlFinder.FindFindMenu(window)!, 1000);
+        private static readonly IStep s_openMenuWithClick = new MouseMoveClickStep(window => ControlFinder.FindFindMenu(window)!, 1000);
 
-        private static List<IStep> NavigateAndToggleMatchCaseShowMenuAndSearch(int numTabs)
-        {
-            List<IStep> steps = [
-              ..NavigateToMenuSelectMatchCaseSteps(numTabs),
-              s_openMenuWithClickStep,
-              ..NavigateToSearchForwardAndPressSteps(),
-              ];
-            return steps;
-        }
-
-        private static List<SimpleStep> NavigateToSearchForwardAndPressSteps() => [
+        private static List<SimpleStep> NavigateToSearchForwardAndPress() => [
             new(_ => Typer.TypeTab(), NavigationDelay),
             new(_ => Typer.TypeTab(), NavigationDelay),
             new(_ => Typer.TypeTab(), 1500),
             new(_ => Typer.TypeEnter(), NavigationDelay)
         ];
 
-        private static List<SimpleStep> NavigateToMenuSelectMatchCaseSteps(int numTabs)
+        private static List<SimpleStep> TabToMenuSelectMatchCase(int numTabs)
         {
             List<SimpleStep> steps =
             [
-                ..Enumerable.Range(0, numTabs).Select(_ => new SimpleStep(_ => Typer.TypeTab(), NavigationDelay)),
+                ..MultipleTabs(numTabs),
+
+                // open menu
                 new SimpleStep(_ => Typer.TypeEnter(), NavigationDelay),
+
+                // navigate to Match Case and select
                 new SimpleStep(_ => Typer.TypeDown(), NavigationDelay),
                 new SimpleStep(_ => Typer.TypeEnter(), 2000)
             ];
@@ -80,11 +75,14 @@ namespace VideoRecorder
             return steps;
         }
 
-        private static List<IStep> SwitchPaletteShowMenuSteps()
+        private static IEnumerable<SimpleStep> MultipleTabs(int numTabs)
+            => Enumerable.Range(0, numTabs).Select(_ => new SimpleStep(_ => Typer.TypeTab(), NavigationDelay));
+
+        private static List<IStep> SwitchPaletteAndShowMenuWithMouseMoveAndClicks()
         {
             List<IStep> steps = [
                 new MouseMoveClickStep(window => ControlFinder.FindPinkPaletteRadioButton(window)!, 0),
-                s_openMenuWithClickStep,];
+                s_openMenuWithClick,];
             return steps;
         }
     }

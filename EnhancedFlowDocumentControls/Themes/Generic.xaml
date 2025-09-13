@@ -5,6 +5,10 @@
 
   <Style
     TargetType="{x:Type local:FindToolBar}">
+    <Setter Property="ToolBarTray.IsLocked" Value="True" />
+    <Setter Property="FocusManager.IsFocusScope" Value="False" />
+    <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Continue" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate

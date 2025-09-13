@@ -16,8 +16,7 @@
     <flowControls:EnhancedFlowDocumentReader
       BorderBrush="{Binding MainForeground}"
       BorderThickness="1"
-      SelectionBrush="{Binding MainForeground}"
-        >
+      SelectionBrush="{Binding MainForeground}">
       <flowControls:EnhancedFlowDocumentReader.Document>
         <FlowDocument
           FontFamily="{StaticResource fontFamily}">
