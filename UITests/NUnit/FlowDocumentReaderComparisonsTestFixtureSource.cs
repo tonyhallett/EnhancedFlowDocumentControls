@@ -4,6 +4,6 @@ namespace UITests.NUnit
 {
     internal sealed class FlowDocumentReaderComparisonsTestFixtureSource : IEnumerable
     {
-        public IEnumerator GetEnumerator() => TestFixtureSourceHelper.GetEnumerator(DemoWindowTypeNames.FlowDocumentReaders);
+        public IEnumerator GetEnumerator() => TestFixtureSourceHelper.GetAllCtorPermutations(DemoWindowTypeNames.FlowDocumentReaders);
     }
 }

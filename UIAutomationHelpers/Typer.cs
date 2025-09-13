@@ -19,6 +19,13 @@ namespace UIAutomationHelpers
         public static void TypeDown(int times = 1)
             => TypeRepeatedly(VirtualKeyShort.DOWN, times);
 
+        public static void TypeUp(int times = 1)
+            => TypeRepeatedly(VirtualKeyShort.UP, times);
+
+        public static void TypeLeft() => Keyboard.Type(VirtualKeyShort.LEFT);
+
+        public static void TypeRight() => Keyboard.Type(VirtualKeyShort.RIGHT);
+
         private static void TypeRepeatedly(VirtualKeyShort key, int times)
         {
             for (int i = 0; i < times; i++)

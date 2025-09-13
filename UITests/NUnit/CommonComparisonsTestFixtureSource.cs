@@ -4,7 +4,7 @@ namespace UITests.NUnit
 {
     internal sealed class CommonComparisonsTestFixtureSource : IEnumerable
     {
-        public IEnumerator GetEnumerator() => TestFixtureSourceHelper.GetEnumerator(
+        public IEnumerator GetEnumerator() => TestFixtureSourceHelper.GetAllCtorPermutations(
             DemoWindowTypeNames.NonFlowDocumentReaders.Concat(DemoWindowTypeNames.FlowDocumentReaders));
     }
 }

@@ -6,6 +6,7 @@
         public static readonly string OriginalDataContext = nameof(Demo.OriginalDataContextWindow);
         public static readonly string InputBindings = nameof(Demo.InputBindingsWindow);
         public static readonly string FindToolbarViewModelAware = nameof(Demo.FindToolbarViewModelAwareWindow);
+        public static readonly string FindingTextBoxStackPanelChild = nameof(Demo.FindingTextBoxStackPanelChildWindow);
 
         public static readonly IEnumerable<string> FlowDocumentReaders =
         [

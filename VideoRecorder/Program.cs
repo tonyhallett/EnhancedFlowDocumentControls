@@ -7,28 +7,23 @@ using VideoRecorder;
 // https://github.com/FlaUI/FlaUI/issues/306
 NativeMethods.SetProcessDPIAware();
 
-(string DemoVideoPath, string NormalVideoPath) = await Record();
-
-VideoDeleter.Delete(DemoVideoPath, NormalVideoPath);
+try
+{
+    (string DemoVideoPath, string NormalVideoPath) = await Record();
+    VideoDeleter.Delete(DemoVideoPath, NormalVideoPath);
+}
+catch (Exception ex)
+{
+    File.WriteAllText(args[0], ex.ToString());
+}
 
 static async Task<(string DemoVideoPath, string NormalVideoPath)> Record()
 {
     CaptureSettings? captureSettings = null;
     List<IStep> steps = RecordSteps.GetSteps();
     using var automation = new UIA3Automation();
-
-    string? normalVideoPath = null;
     string? enhancedVideoPath = await Recorder.RecordAvi(nameof(Demo.EnhancedFlowDocumentReaderVideoWindow), steps, automation, captureSettings);
-    if (enhancedVideoPath != null)
-    {
-        normalVideoPath = await Recorder.RecordAvi(nameof(Demo.NormalFlowDocumentReaderVideoWindow), steps, automation, captureSettings);
-    }
-
-    if (enhancedVideoPath == null || normalVideoPath == null)
-    {
-        throw new Exception("Recording failed. One of the video paths is null.");
-    }
-
-    await AviToGifConverter.ConvertAsync(enhancedVideoPath, normalVideoPath);
-    return (enhancedVideoPath, normalVideoPath);
+    string? normalVideoPath = await Recorder.RecordAvi(nameof(Demo.NormalFlowDocumentReaderVideoWindow), steps, automation, captureSettings);
+    await AviToGifConverter.ConvertAsync(enhancedVideoPath!, normalVideoPath!);
+    return (enhancedVideoPath!, normalVideoPath!);
 }

@@ -11,17 +11,17 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
 
         FindToolBarManager IEnhancedFlowDocumentControl.FindToolBarManager => _findToolBarManager;
 
-        public static readonly DependencyProperty FindToolbarContentProperty =
+        public static readonly DependencyProperty FindToolBarProperty =
             DependencyProperty.Register(
-                nameof(FindToolbarContent),
+                nameof(FindToolBar),
                 typeof(FrameworkElement),
                 typeof(EnhancedFlowDocumentScrollViewer),
                 new PropertyMetadata(null));
 
-        public FrameworkElement FindToolbarContent
+        public FrameworkElement FindToolBar
         {
-            get => (FrameworkElement)GetValue(FindToolbarContentProperty);
-            set => SetValue(FindToolbarContentProperty, value);
+            get => (FrameworkElement)GetValue(FindToolBarProperty);
+            set => SetValue(FindToolBarProperty, value);
         }
 
         static EnhancedFlowDocumentScrollViewer() => EventManager.RegisterClassHandler(
@@ -33,7 +33,7 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _findToolBarManager.Setup(this, FindToolbarContent);
+            _findToolBarManager.Setup(this, FindToolBar);
         }
 
         protected override void OnKeyDown(KeyEventArgs e) => _findToolBarManager.KeyDown(e, base.OnKeyDown);

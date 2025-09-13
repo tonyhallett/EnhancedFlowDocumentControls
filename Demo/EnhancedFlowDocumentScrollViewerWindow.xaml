@@ -22,7 +22,7 @@
             </Paragraph>
           </FlowDocument>
         </flowControls:EnhancedFlowDocumentScrollViewer.Document>
-        <flowControls:EnhancedFlowDocumentScrollViewer.FindToolbarContent>
+        <flowControls:EnhancedFlowDocumentScrollViewer.FindToolBar>
           <findControls:FindToolBar
             AutomationProperties.AutomationId="replacedFindToolBar">
             <Border
@@ -60,7 +60,7 @@
               </StackPanel>
             </Border>
           </findControls:FindToolBar>
-        </flowControls:EnhancedFlowDocumentScrollViewer.FindToolbarContent>
+        </flowControls:EnhancedFlowDocumentScrollViewer.FindToolBar>
       </flowControls:EnhancedFlowDocumentScrollViewer>
     </demoCommon:NonFlowDocumentReaderDemo.FlowControl>
   </demoCommon:NonFlowDocumentReaderDemo>

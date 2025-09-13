@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace EnhancedFlowDocumentControls.Restyling
 {
     /// <summary>
-    /// Have decided not to use this as FindToolbarContent works perfectly.
+    /// Have decided not to use this as FindToolbar works perfectly.
     /// </summary>
     internal class FindToolBarRestyler
     {

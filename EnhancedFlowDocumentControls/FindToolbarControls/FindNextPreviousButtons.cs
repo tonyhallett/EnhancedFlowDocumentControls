@@ -3,11 +3,10 @@ using System.Windows.Controls;
 
 namespace EnhancedFlowDocumentControls.FindToolbarControls
 {
-    /// <summary>
-    /// Interaction logic for FindNextPreviousButtons.xaml.
-    /// </summary>
-    public partial class FindNextPreviousButtons : UserControl
+    public class FindNextPreviousButtons : Control
     {
+        static FindNextPreviousButtons() => DefaultStyleKeyProperty.OverrideMetadata(typeof(FindNextPreviousButtons), new FrameworkPropertyMetadata(typeof(FindNextPreviousButtons)));
+
         public bool ShowTooltips
         {
             get => (bool)GetValue(ShowTooltipsProperty);
@@ -35,6 +34,5 @@ namespace EnhancedFlowDocumentControls.FindToolbarControls
         public static readonly DependencyProperty FindPreviousTooltipProperty =
             DependencyProperty.Register(nameof(FindPreviousTooltip), typeof(string), typeof(FindNextPreviousButtons), new PropertyMetadata("Find Previous"));
 
-        public FindNextPreviousButtons() => InitializeComponent();
     }
 }

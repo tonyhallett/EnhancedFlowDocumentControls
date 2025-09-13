@@ -1,31 +1,33 @@
 ﻿<demoCommon:DemoWindow
-  x:Class="Demo.FindToolbarViewModelAwareWindow"
+  x:Class="Demo.FindingTextBoxStackPanelChildWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:local="clr-namespace:Demo"
   xmlns:demoCommon="clr-namespace:DemoCommon;assembly=DemoCommon"
   xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolbarControls;assembly=EnhancedFlowDocumentControls"
   xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
-  Title="Demo IFindToolbarViewModelAware"
+  Title="Find Textbox StackPanel Child Demo"
   mc:Ignorable="d">
   <DockPanel
     LastChildFill="True">
     <demoCommon:PaletteSwitcherControl
       DockPanel.Dock="Top" />
-    <flowControls:EnhancedFlowDocumentReader>
+    <flowControls:EnhancedFlowDocumentReader
+      BorderBrush="{Binding MainForeground}"
+      BorderThickness="1"
+      SelectionBrush="{Binding MainForeground}">
       <flowControls:EnhancedFlowDocumentReader.Document>
-        <FlowDocument>
+        <FlowDocument
+          FontFamily="{StaticResource fontFamily}">
           <Paragraph>
             <Run
-              Text="This is a demo of IFindToolBarViewModelAware" />
+              Text="Find Textbox StackPanel Child Demo." />
           </Paragraph>
         </FlowDocument>
       </flowControls:EnhancedFlowDocumentReader.Document>
       <flowControls:EnhancedFlowDocumentReader.FindToolBar>
-        <findControls:FindToolBar
-          AutomationProperties.AutomationId="replacedFindToolBar">
+        <findControls:FindToolBar AutomationProperties.AutomationId="replacedFindToolBar">
           <Border
             Margin="5,1,0,1"
             Padding="0"
@@ -35,11 +37,8 @@
             SnapsToDevicePixels="true">
             <StackPanel
               Orientation="Horizontal">
-              <findControls:FindTextBox
-                Background="{Binding Background}"
-                Foreground="{Binding Text}"
-                HintText="Do it"
-                SelectionBrush="{Binding MainBackground}" />
+              <TextBox Width="100" x:Name="findTextBox"
+                Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type findControls:FindToolBar}}, Path=FindToolBarViewModel.FindText, UpdateSourceTrigger=PropertyChanged}" />
               <findControls:FindNextPreviousButtons
                 Foreground="{Binding PrevNext}" />
               <findControls:FindMenu
@@ -62,9 +61,6 @@
           </Border>
         </findControls:FindToolBar>
       </flowControls:EnhancedFlowDocumentReader.FindToolBar>
-
-
-
     </flowControls:EnhancedFlowDocumentReader>
   </DockPanel>
 </demoCommon:DemoWindow>

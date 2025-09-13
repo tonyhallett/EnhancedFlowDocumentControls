@@ -29,11 +29,11 @@ FindToolbar.xaml obtained from PresentationUI ms/internal/documents/findtoolbar.
 
 For each of the three flow document controls
 
-Set the FindToolbarContent property in xaml and bind to the properties of the FindToolBarViewModel.
+Set the FindToolbar property in xaml and bind to the properties of the FindToolBarViewModel.
 
 The FindToolBarViewModel will be available via either of two methods.
 
-If the root element of the FindToolbarContent implements IFindToolBarViewModelAware it will be available on the FindToolBarViewModel property.
+If the root element of the FindToolbar implements IFindToolBarViewModelAware it will be available on the FindToolBarViewModel property.
 
 If the root element does not implement IFindToolBarViewModelAware then its DataContext will be set to the FindToolBarViewModel and
 
@@ -166,7 +166,7 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
           </Paragraph>
         </FlowDocument>
       </flowControls:EnhancedFlowDocumentReader.Document>
-      <flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+      <flowControls:EnhancedFlowDocumentReader.FindToolbar>
         <findControls:FindToolBar>
           <Border
             Margin="5,1,0,1"
@@ -203,7 +203,7 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
             </StackPanel>
           </Border>
         </findControls:FindToolBar>
-      </flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+      </flowControls:EnhancedFlowDocumentReader.FindToolbar>
     </flowControls:EnhancedFlowDocumentReader>
   </DockPanel>
 </demoCommon:DemoWindow>

@@ -23,7 +23,7 @@
           </Paragraph>
         </FlowDocument>
       </flowControls:EnhancedFlowDocumentReader.Document>
-      <flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
         <Border
           Margin="5,1,0,1"
           Padding="0"
@@ -52,7 +52,7 @@
             </Button>
           </StackPanel>
         </Border>
-      </flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
     </flowControls:EnhancedFlowDocumentReader>
   </DockPanel>
 </demoCommon:DemoWindow>

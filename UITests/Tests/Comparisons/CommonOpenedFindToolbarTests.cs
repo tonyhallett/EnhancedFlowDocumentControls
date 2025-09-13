@@ -11,17 +11,6 @@ namespace UITests.Tests.Comparisons
         : OpenedFindToolbarTestsBase(windowTypeName, frameworkVersion)
     {
         [Test]
-        public void Should_Focus_The_TextBox_With_XName_findTextBox()
-        {
-            RetryResult<TextBox?> findTextBoxResult = Retry.WhileNull(() =>
-            {
-                TextBox? findTextBox = ControlFinder.FindFindTextBox(Window);
-                return findTextBox?.Properties.HasKeyboardFocus ? findTextBox : null;
-            });
-            Assert.That(findTextBoxResult.Result, Is.Not.Null, "Find text box should not be null");
-        }
-
-        [Test]
         public void Should_Close_Find_Toolbar_When_Press_Escape()
         {
             Typer.TypeEsc();

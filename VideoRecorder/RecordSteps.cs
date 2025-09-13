@@ -13,7 +13,11 @@ namespace VideoRecorder
              ClickFindButton(),
               ..InputText("FlowDocumentReader"),
               ..TabToMenuSelectMatchCase(3),
-                s_openMenuWithClick,
+
+              // show what just selected
+                s_moveClickMenuDropDown,
+                s_moveClickMenuDropDown,
+
               ..NavigateToSearchForwardAndPress(),
               ..SwitchPaletteAndShowMenuWithMouseMoveAndClicks(),
               KeepAlive(2000)];
@@ -49,7 +53,7 @@ namespace VideoRecorder
         private static IEnumerable<SimpleStep> TypeWord(string word, int keyDelay)
             => Typer.TypeWord(word).Select(action => new SimpleStep(_ => action(), keyDelay));
 
-        private static readonly IStep s_openMenuWithClick = new MouseMoveClickStep(window => ControlFinder.FindFindMenu(window)!, 1000);
+        private static readonly IStep s_moveClickMenuDropDown = new MouseMoveClickStep(window => ControlFinder.FindFindMenu(window)!, 1000);
 
         private static List<SimpleStep> NavigateToSearchForwardAndPress() => [
             new(_ => Typer.TypeTab(), NavigationDelay),
@@ -82,7 +86,7 @@ namespace VideoRecorder
         {
             List<IStep> steps = [
                 new MouseMoveClickStep(window => ControlFinder.FindPinkPaletteRadioButton(window)!, 0),
-                s_openMenuWithClick,];
+                s_moveClickMenuDropDown,];
             return steps;
         }
     }

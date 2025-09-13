@@ -5,7 +5,7 @@ namespace UITests.NUnit
 {
     internal static class TestFixtureSourceHelper
     {
-        public static IEnumerator GetEnumerator(IEnumerable<string> windowTypeNames)
+        public static IEnumerator GetAllCtorPermutations(IEnumerable<string> windowTypeNames)
         {
             IEnumerable<FrameworkVersion> frameworkVersions = FrameworkVersionValues.Get();
             foreach (string windowTypeName in windowTypeNames)

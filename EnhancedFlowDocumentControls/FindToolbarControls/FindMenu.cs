@@ -4,11 +4,10 @@ using System.Windows.Media;
 
 namespace EnhancedFlowDocumentControls.FindToolbarControls
 {
-    /// <summary>
-    /// Interaction logic for FindMenu.xaml.
-    /// </summary>
-    public partial class FindMenu : UserControl
+    public class FindMenu : Control
     {
+        static FindMenu() => DefaultStyleKeyProperty.OverrideMetadata(typeof(FindMenu), new FrameworkPropertyMetadata(typeof(FindMenu)));
+
         public Brush MenuBackground
         {
             get => (Brush)GetValue(MenuBackgroundProperty);
@@ -295,6 +294,5 @@ namespace EnhancedFlowDocumentControls.FindToolbarControls
         #endregion
 
         #endregion
-        public FindMenu() => InitializeComponent();
     }
 }

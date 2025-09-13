@@ -62,7 +62,7 @@ namespace EnhancedFlowDocumentControls.Management
 
         private readonly Action<Action> _dispatcher;
         private FlowControlReflector _flowControlReflector;
-        private FrameworkElement _findToolBarContent;
+        private FrameworkElement _customFindToolBar;
         private Decorator _originalFindToolBarHost;
         private IEnhancedFlowDocumentControl _flowControl;
         private FindToolBarViewModel _findToolBarViewModel;
@@ -71,9 +71,9 @@ namespace EnhancedFlowDocumentControls.Management
 
         private bool IsShowingFindToolbar => _originalFindToolBarHost.Child != null;
 
-        internal void Setup(IEnhancedFlowDocumentControl flowControl, FrameworkElement findToolBarContent)
+        internal void Setup(IEnhancedFlowDocumentControl flowControl, FrameworkElement customFindToolBar)
         {
-            _findToolBarContent = findToolBarContent;
+            _customFindToolBar = customFindToolBar;
             _flowControl = flowControl;
             ReplaceToolBarHostFieldWithAlertingNotInTree();
         }
@@ -102,7 +102,7 @@ namespace EnhancedFlowDocumentControls.Management
         // includes relevant parts of DocumentViewerHelper.ToggleFindToolBar
         private void AlertingFindToolBarHost_ShowToolBarEvent(object sender, ToolBar findToolBar)
         {
-            if (_findToolBarContent is IFindToolBarViewModelAware findToolBarViewModelAware)
+            if (_customFindToolBar is IFindToolBarViewModelAware findToolBarViewModelAware)
             {
                 _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), null);
                 findToolBarViewModelAware.FindToolBarViewModel = _findToolBarViewModel;
@@ -110,20 +110,19 @@ namespace EnhancedFlowDocumentControls.Management
             else
             {
                 _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), _flowControl as FrameworkElement);
-                _findToolBarContent.DataContext = _findToolBarViewModel;
+                _customFindToolBar.DataContext = _findToolBarViewModel;
             }
 
-            _originalFindToolBarHost.Child = _findToolBarContent;
+            _originalFindToolBarHost.Child = _customFindToolBar;
             _originalFindToolBarHost.Visibility = Visibility.Visible;
             KeyboardNavigation.SetTabNavigation(_originalFindToolBarHost, KeyboardNavigationMode.Continue);
             FocusManager.SetIsFocusScope(_originalFindToolBarHost, true);
-
-            ReadyTextBox();
+            _customFindToolBar.Loaded += (_, __) => ReadyTextBox();
         }
 
         private void ReadyTextBox()
         {
-            TextBox findTextBox = VisualTreeUtilities.FindByName<TextBox>(_findToolBarContent, "findTextBox");
+            TextBox findTextBox = VisualTreeUtilities.FindByName<TextBox>(_customFindToolBar, "findTextBox");
             if (findTextBox == null)
             {
                 return;

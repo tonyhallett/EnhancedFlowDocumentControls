@@ -25,9 +25,9 @@
         </Paragraph>
       </FlowDocument>
     </flowControls:EnhancedFlowDocumentReader.Document>
-    <flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+    <flowControls:EnhancedFlowDocumentReader.FindToolBar>
       <Button
         AutomationProperties.AutomationId="replacedFindToolBar" />
-    </flowControls:EnhancedFlowDocumentReader.FindToolbarContent>
+    </flowControls:EnhancedFlowDocumentReader.FindToolBar>
   </flowControls:EnhancedFlowDocumentReader>
 </Window>

@@ -1,18 +1,26 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace EnhancedFlowDocumentControls.FindToolbarControls
 {
-    /// <summary>
-    /// Interaction logic for FindTextBox.xaml.
-    /// </summary>
-    public partial class FindTextBox : UserControl
+    public class FindTextBox : Control
     {
         static FindTextBox()
         {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FindTextBox), new FrameworkPropertyMetadata(typeof(FindTextBox)));
             SelectionBrushProperty = TextBox.SelectionBrushProperty.AddOwner(typeof(FindTextBox));
-
             SelectionOpacityProperty = TextBox.SelectionOpacityProperty.AddOwner(typeof(FindTextBox));
         }
 
@@ -85,11 +93,5 @@ namespace EnhancedFlowDocumentControls.FindToolbarControls
 
         public static readonly DependencyProperty TextBoxWidthProperty =
             DependencyProperty.Register(nameof(TextBoxWidth), typeof(double), typeof(FindTextBox), new PropertyMetadata(183D));
-
-        public FindTextBox()
-        {
-            Foreground = Brushes.Black;
-            InitializeComponent();
-        }
     }
 }
