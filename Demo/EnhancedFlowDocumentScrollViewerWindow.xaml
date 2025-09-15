@@ -6,7 +6,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:local="clr-namespace:Demo"
   xmlns:demoCommon="clr-namespace:DemoCommon;assembly=DemoCommon"
-  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolbarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
   xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
   Title="Enhanced FlowDocumentScrollViewer Demo"
   mc:Ignorable="d">

@@ -102,25 +102,34 @@ namespace EnhancedFlowDocumentControls.Management
         // includes relevant parts of DocumentViewerHelper.ToggleFindToolBar
         private void AlertingFindToolBarHost_ShowToolBarEvent(object sender, ToolBar findToolBar)
         {
-            if (_customFindToolBar is IFindToolBarViewModelAware findToolBarViewModelAware)
-            {
-                _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), null);
-                findToolBarViewModelAware.FindToolBarViewModel = _findToolBarViewModel;
-            }
-            else
-            {
-                _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), _flowControl as FrameworkElement);
-                _customFindToolBar.DataContext = _findToolBarViewModel;
-            }
-
-            _originalFindToolBarHost.Child = _customFindToolBar;
+            FrameworkElement originalDataContextElement = _customFindToolBar is IFindToolBarViewModelAware ? null : _flowControl as FrameworkElement;
+            _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), originalDataContextElement);
+            AddCustomFindToolBarToHost();
             _originalFindToolBarHost.Visibility = Visibility.Visible;
             KeyboardNavigation.SetTabNavigation(_originalFindToolBarHost, KeyboardNavigationMode.Continue);
             FocusManager.SetIsFocusScope(_originalFindToolBarHost, true);
             _customFindToolBar.Loaded += (_, __) => ReadyTextBox();
         }
 
-        private void ReadyTextBox()
+        private void AddCustomFindToolBarToHost()
+        {
+            SetCustomFindToolBarViewModel();
+            _originalFindToolBarHost.Child = _customFindToolBar;
+        }
+
+        private void SetCustomFindToolBarViewModel()
+        {
+            if (_customFindToolBar is IFindToolBarViewModelAware findToolBarViewModelAware)
+            {
+                findToolBarViewModelAware.FindToolBarViewModel = _findToolBarViewModel;
+            }
+            else
+            {
+                _customFindToolBar.DataContext = _findToolBarViewModel;
+            }
+        }
+
+        private void ReadyTextBox(bool goToTextBox = true)
         {
             TextBox findTextBox = VisualTreeUtilities.FindByName<TextBox>(_customFindToolBar, "findTextBox");
             if (findTextBox == null)
@@ -139,24 +148,30 @@ namespace EnhancedFlowDocumentControls.Management
                 _findToolBarViewModel.Find();
             };
 
+            if (!goToTextBox)
+            {
+                return;
+            }
+
             GoToTextBox(findTextBox);
         }
 
         private void GoToTextBox(TextBox findTextBox)
-        {
-            Action doGoToTextBox = () =>
+            => DoDispatch(() =>
             {
                 _ = findTextBox.Focus();
                 _ = Keyboard.Focus(findTextBox);
-            };
+            });
 
+        private void DoDispatch(Action action)
+        {
             if (_dispatcher != null)
             {
-                _dispatcher(doGoToTextBox);
+                _dispatcher(action);
             }
             else
             {
-                _ = findTextBox.Dispatcher.BeginInvoke(doGoToTextBox, DispatcherPriority.Background);
+                _ = _originalFindToolBarHost.Dispatcher.BeginInvoke(action, DispatcherPriority.Background);
             }
         }
 
@@ -182,6 +197,41 @@ namespace EnhancedFlowDocumentControls.Management
         {
             Decorator originalFindToolBarHost = (sender as IEnhancedFlowDocumentControl).FindToolBarManager._originalFindToolBarHost;
             DocumentViewHelper.KeyDownHelper(e, originalFindToolBarHost);
+        }
+
+        // unlikely and not documented.
+        internal void FindToolBarChanged(FrameworkElement customFindToolBar)
+        {
+            _customFindToolBar = customFindToolBar;
+            if (_findToolBarViewModel == null)
+            {
+                return;
+            }
+
+            string focusedElementName = null;
+            if (FocusManager.GetFocusedElement(_originalFindToolBarHost) is FrameworkElement focusedElement)
+            {
+                focusedElementName = focusedElement.Name;
+            }
+
+            AddCustomFindToolBarToHost();
+
+            _customFindToolBar.Loaded += (_, __) =>
+            {
+                ReadyTextBox(false);
+                if (focusedElementName == null)
+                {
+                    return;
+                }
+
+                FrameworkElement newFocusedElement = VisualTreeUtilities.FindByName<FrameworkElement>(_customFindToolBar, focusedElementName);
+                if (newFocusedElement == null)
+                {
+                    return;
+                }
+
+                DoDispatch(() => FocusManager.SetFocusedElement(_originalFindToolBarHost, newFocusedElement));
+            };
         }
     }
 }

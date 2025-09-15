@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using EnhancedFlowDocumentControls.ViewModel;
 
-namespace EnhancedFlowDocumentControls.FindToolbarControls
+namespace EnhancedFlowDocumentControls.FindToolBarControls
 {
     public class FindToolBar : ToolBar, IFindToolBarViewModelAware
     {

@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using FlaUI.Core;
-using FlaUI.Core.AutomationElements;
-using UIAutomationHelpers;
+﻿using UIAutomationHelpers;
 using UITests.NUnit;
 
 namespace UITests.Tests.Enhanced

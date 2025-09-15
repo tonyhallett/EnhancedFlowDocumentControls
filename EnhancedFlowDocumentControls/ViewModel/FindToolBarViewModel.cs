@@ -8,7 +8,7 @@ using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
-    public class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindToolBarViewModel
+    internal class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindToolBarViewModel
     {
         private readonly IFinder _finder;
         private string _findText;

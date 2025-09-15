@@ -9,8 +9,8 @@
   Width="800"
   Height="450"
   mc:Ignorable="d">
-    <flowControls:EnhancedFlowDocumentReader>
-        <flowControls:EnhancedFlowDocumentReader.Document>
+  <flowControls:EnhancedFlowDocumentReader>
+    <flowControls:EnhancedFlowDocumentReader.Document>
       <FlowDocument>
         <Paragraph>
           <Run
@@ -19,7 +19,8 @@
       </FlowDocument>
     </flowControls:EnhancedFlowDocumentReader.Document>
     <flowControls:EnhancedFlowDocumentReader.FindToolBar>
-            <local:IFindToolBarViewModelAwareAllowSearchingWhenEmptyText AutomationProperties.AutomationId="replacedFindToolBar"/>
+      <local:IFindToolBarViewModelAwareAllowSearchingWhenEmptyText
+        AutomationProperties.AutomationId="replacedFindToolBar" />
     </flowControls:EnhancedFlowDocumentReader.FindToolBar>
   </flowControls:EnhancedFlowDocumentReader>
 </Window>

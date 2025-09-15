@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace EnhancedFlowDocumentControls.FindToolbarControls
+namespace EnhancedFlowDocumentControls.FindToolBarControls
 {
     public class FindNextPreviousButtons : Control
     {

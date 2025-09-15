@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:local="clr-namespace:EnhancedFlowDocumentControls.FindToolbarControls"
-  xmlns:viewModel="clr-namespace:EnhancedFlowDocumentControls.ViewModel"
-  xmlns:converters="clr-namespace:EnhancedFlowDocumentControls.Converters">
+  xmlns:local="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls"
+  xmlns:converters="clr-namespace:EnhancedFlowDocumentControls.Converters"
+  xmlns:viewModel="clr-namespace:EnhancedFlowDocumentControls.ViewModel">
 
   <Style
     TargetType="local:FindMenu">
@@ -450,7 +450,7 @@
                 </Setter>
               </Style>
             </StackPanel.Resources>
-             <Button x:Name="FindPreviousButton"
+            <Button x:Name="FindPreviousButton"
               Command="{Binding RelativeSource={RelativeSource AncestorType=viewModel:IFindToolBarViewModelAware}, Path=FindToolBarViewModel.PreviousCommand}"
               FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
               ToolTip="{TemplateBinding FindPreviousTooltip}"

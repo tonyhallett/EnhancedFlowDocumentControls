@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace EnhancedFlowDocumentControls.Utils
 {
@@ -15,15 +15,18 @@ namespace EnhancedFlowDocumentControls.Utils
                 return parentAsT;
             }
 
-            // Search visual children
-            int visualChildrenCount = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < visualChildrenCount; i++)
+            if (parent is Visual || parent is Visual3D)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                T result = FindByName<T>(child, name);
-                if (result != null)
+                // Search visual children
+                int visualChildrenCount = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < visualChildrenCount; i++)
                 {
-                    return result;
+                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                    T result = FindByName<T>(child, name);
+                    if (result != null)
+                    {
+                        return result;
+                    }
                 }
             }
 

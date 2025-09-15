@@ -55,11 +55,17 @@ namespace UITests.Tests
             AssertSelected(expectedEnclosingWord, findText);
         }
 
-        protected void FocusFindTextAndSetText(string text)
+        protected TextBox FocusFindTextBox()
         {
             TextBox? findTextBox = ControlFinder.FindFindTextBox(Window);
             findTextBox!.Focus();
-            findTextBox!.Text = text;
+            return findTextBox;
+        }
+
+        protected void FocusFindTextAndSetText(string text)
+        {
+            TextBox findTextBox = FocusFindTextBox();
+            findTextBox.Text = text;
         }
 
         protected void AssertSelected(string expectedEnclosingWord, string expectedSelectedText)

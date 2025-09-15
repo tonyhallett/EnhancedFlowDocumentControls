@@ -14,5 +14,8 @@
     <Compile Update="IFindToolBarViewModelAwareAllowSearchingWhenEmptyTextWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="FindToolBarChangedWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

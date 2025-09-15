@@ -178,7 +178,7 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:demoCommon="clr-namespace:DemoCommon;assembly=DemoCommon"
-  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolbarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
   xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
   Title="Enhanced FlowDocumentReader Demo"
   mc:Ignorable="d">

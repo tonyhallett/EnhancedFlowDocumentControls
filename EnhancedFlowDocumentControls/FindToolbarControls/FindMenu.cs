@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace EnhancedFlowDocumentControls.FindToolbarControls
+namespace EnhancedFlowDocumentControls.FindToolBarControls
 {
     public class FindMenu : Control
     {

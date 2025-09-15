@@ -19,7 +19,17 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
                 nameof(FindToolBar),
                 typeof(FrameworkElement),
                 typeof(EnhancedFlowDocumentReader),
-                new PropertyMetadata(null));
+                new PropertyMetadata(null, FindToolBarChanged));
+
+        private static void FindToolBarChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is EnhancedFlowDocumentReader reader))
+            {
+                return;
+            }
+
+            reader._findToolBarManager.FindToolBarChanged(e.NewValue as FrameworkElement);
+        }
 
         public FrameworkElement FindToolBar
         {

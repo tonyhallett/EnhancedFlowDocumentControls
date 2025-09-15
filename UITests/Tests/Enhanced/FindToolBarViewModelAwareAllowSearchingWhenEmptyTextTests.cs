@@ -3,9 +3,9 @@ using UITests.NUnit;
 
 namespace UITests.Tests.Enhanced
 {
-    [TestFixture(DemoWindowTypeNames.FindToolBarViewModelAwareAllowSearchingWhenEmptyText,true)]
+    [TestFixture(DemoWindowTypeNames.FindToolBarViewModelAwareAllowSearchingWhenEmptyText, true)]
     [TestFixture(DemoWindowTypeNames.EnhancedFlowDocumentReader, false)]
-    internal class FindToolBarViewModelAwareAllowSearchingWhenEmptyTextTests(string windowTypeName, bool allowSearchingWhenEmptyText)
+    internal sealed class FindToolBarViewModelAwareAllowSearchingWhenEmptyTextTests(string windowTypeName, bool allowSearchingWhenEmptyText)
         : OpenedFindToolbarTestsBase(windowTypeName, FrameworkVersion.Net472)
     {
         [Test]
