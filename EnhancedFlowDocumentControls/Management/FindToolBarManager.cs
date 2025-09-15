@@ -8,6 +8,18 @@ using EnhancedFlowDocumentControls.ViewModel;
 
 namespace EnhancedFlowDocumentControls.Management
 {
+    internal class WpfUtilities
+    {
+        public event RoutedEventHandler CustomFindToolbarLoadedEvent;
+
+        public void SetCustomFindToolBar(FrameworkElement customFindToolBar)
+        {
+            customFindToolBar.Loaded += CustomFindToolBar_Loaded;
+        }
+
+        private void CustomFindToolBar_Loaded(object sender, RoutedEventArgs e) => CustomFindToolbarLoadedEvent?.Invoke(sender, e);
+    }
+
     internal class FindToolBarManager
     {
         private readonly Action<Action> _dispatcher;
