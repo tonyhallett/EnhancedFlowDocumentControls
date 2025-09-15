@@ -4,7 +4,7 @@ using Moq;
 
 namespace UITests
 {
-    internal class FindToolBarManagerSetupTests
+    internal sealed class FindToolBarManagerSetupTests
     {
         [Test]
         public void Should_Replace_EnhancedFlowDocumentControl_ToolBarHost_Field_With_Alerting_When_Setup()
@@ -20,6 +20,7 @@ namespace UITests
             var findToolbarManager = new FindToolBarManager(
                 alertingFindToolBarHost,
                 mockFlowControlReflectorFactory.Object,
+                null,
                 null,
                 null);
 

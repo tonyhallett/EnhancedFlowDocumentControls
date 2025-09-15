@@ -8,18 +8,6 @@ using EnhancedFlowDocumentControls.ViewModel;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class WpfUtilities
-    {
-        public event RoutedEventHandler CustomFindToolbarLoadedEvent;
-
-        public void SetCustomFindToolBar(FrameworkElement customFindToolBar)
-        {
-            customFindToolBar.Loaded += CustomFindToolBar_Loaded;
-        }
-
-        private void CustomFindToolBar_Loaded(object sender, RoutedEventArgs e) => CustomFindToolbarLoadedEvent?.Invoke(sender, e);
-    }
-
     internal class FindToolBarManager
     {
         private readonly Action<Action> _dispatcher;
@@ -27,6 +15,7 @@ namespace EnhancedFlowDocumentControls.Management
         private readonly IFlowControlReflectorFactory _flowControlReflectorFactory;
         private readonly IDocumentViewHelper _documentViewerHelper;
         private readonly IFindToolBarViewModelFactory _findToolBarViewModelFactory;
+        private readonly IWpfUtilities _wpfUtilities;
         private IFlowControlReflector _flowControlReflector;
         private FrameworkElement _customFindToolBar;
         private Decorator _originalFindToolBarHost;
@@ -39,6 +28,7 @@ namespace EnhancedFlowDocumentControls.Management
                   new FlowControlReflectorFactory(),
                   new DocumentViewHelper(),
                   new FindToolBarViewModelFactory(),
+                  new WpfUtilities(),
                   dispatcher)
         {
         }
@@ -49,6 +39,7 @@ namespace EnhancedFlowDocumentControls.Management
             IFlowControlReflectorFactory flowControlReflectorFactory,
             IDocumentViewHelper documentViewerHelper,
             IFindToolBarViewModelFactory findToolBarViewModelFactory,
+            IWpfUtilities wpfUtilities,
             Action<Action> dispatcher = null)
         {
             _dispatcher = dispatcher;
@@ -56,6 +47,7 @@ namespace EnhancedFlowDocumentControls.Management
             _flowControlReflectorFactory = flowControlReflectorFactory;
             _documentViewerHelper = documentViewerHelper;
             _findToolBarViewModelFactory = findToolBarViewModelFactory;
+            _wpfUtilities = wpfUtilities;
             alertingFindToolBarHost.ShowToolBarEvent += AlertingFindToolBarHost_ShowToolBarEvent;
             alertingFindToolBarHost.CloseToolBarEvent += AlertingFindToolBarHost_CloseToolBarEvent;
         }
@@ -89,7 +81,7 @@ namespace EnhancedFlowDocumentControls.Management
             _findToolBarViewModel = _findToolBarViewModelFactory.Create(findToolBar, originalDataContextElement);
             AddCustomFindToolBarToHost();
             _documentViewerHelper.ToggleFindToolBarHost(_originalFindToolBarHost, true);
-            _customFindToolBar.Loaded += (_, __) => ReadyTextBox();
+            _wpfUtilities.AddLoadedEventHandler(_customFindToolBar, (_, __) => ReadyTextBox());
         }
 
         private void AddCustomFindToolBarToHost()
@@ -112,37 +104,15 @@ namespace EnhancedFlowDocumentControls.Management
 
         private void ReadyTextBox(bool goToTextBox = true)
         {
-            TextBox findTextBox = VisualTreeUtilities.FindByName<TextBox>(_customFindToolBar, "findTextBox");
-            if (findTextBox == null)
-            {
-                return;
-            }
-
-            findTextBox.PreviewKeyDown += (sender, e) =>
-            {
-                if (e == null || (e.Key != Key.Return && e.Key != Key.Execute))
-                {
-                    return;
-                }
-
-                e.Handled = true;
-                _findToolBarViewModel.Find();
-            };
+            _wpfUtilities.AddPreviewKeyDownEnterOrExecuteHandler(_findToolBarViewModel.Find);
 
             if (!goToTextBox)
             {
                 return;
             }
 
-            GoToTextBox(findTextBox);
+            _wpfUtilities.FocusTextBox(_dispatcher);
         }
-
-        private void GoToTextBox(TextBox findTextBox)
-            => DoDispatch(() =>
-            {
-                _ = findTextBox.Focus();
-                _ = Keyboard.Focus(findTextBox);
-            });
 
         private void DoDispatch(Action action)
         {
