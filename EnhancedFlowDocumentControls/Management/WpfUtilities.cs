@@ -10,12 +10,14 @@ namespace EnhancedFlowDocumentControls.Management
     internal class WpfUtilities : IWpfUtilities
     {
         private FrameworkElement _customFindToolBar;
+        private RoutedEventHandler _loadedHandler;
         private TextBox _findTextBox;
+        private KeyEventHandler _previewKeyDownHandler;
 
         public void AddPreviewKeyDownEnterOrExecuteHandler(Action handler)
         {
             _findTextBox = VisualTreeUtilities.FindByName<TextBox>(_customFindToolBar, "findTextBox");
-            _findTextBox.PreviewKeyDown += (_, e) =>
+            _previewKeyDownHandler = (_, e) =>
             {
                 if (e == null || (e.Key != Key.Return && e.Key != Key.Execute))
                 {
@@ -25,6 +27,7 @@ namespace EnhancedFlowDocumentControls.Management
                 e.Handled = true;
                 handler();
             };
+            _findTextBox.PreviewKeyDown += _previewKeyDownHandler;
         }
 
         public void FocusTextBox(Action<Action> dispatcher)
@@ -51,7 +54,31 @@ namespace EnhancedFlowDocumentControls.Management
         public void AddLoadedEventHandler(FrameworkElement customFindToolBar, RoutedEventHandler loadedHandler)
         {
             _customFindToolBar = customFindToolBar;
+            _loadedHandler = loadedHandler;
             customFindToolBar.Loaded += loadedHandler;
+        }
+
+        public F3KeyType GetF3KeyType(KeyEventArgs e)
+        {
+            if (e.Key == Key.F3)
+            {
+                e.Handled = true;
+                bool shiftPressed = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+                return shiftPressed ? F3KeyType.ShiftF3 : F3KeyType.F3;
+            }
+
+            return F3KeyType.NotF3;
+        }
+
+        public void Clear()
+        {
+            _findTextBox.KeyDown -= _previewKeyDownHandler;
+            _previewKeyDownHandler = null;
+            _findTextBox = null;
+
+            _customFindToolBar.Loaded -= _loadedHandler;
+            _loadedHandler = null;
+            _customFindToolBar = null;
         }
     }
 }

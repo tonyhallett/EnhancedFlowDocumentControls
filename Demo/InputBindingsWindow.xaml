@@ -27,8 +27,10 @@
       </FlowDocument>
     </flowControls:EnhancedFlowDocumentReader.Document>
     <flowControls:EnhancedFlowDocumentReader.FindToolBar>
-      <Button
-        AutomationProperties.AutomationId="replacedFindToolBar" />
+      <findControls:FindToolBar
+        AutomationProperties.AutomationId="replacedFindToolBar">
+        <findControls:FindTextBox />
+      </findControls:FindToolBar>
     </flowControls:EnhancedFlowDocumentReader.FindToolBar>
   </flowControls:EnhancedFlowDocumentReader>
 </Window>
