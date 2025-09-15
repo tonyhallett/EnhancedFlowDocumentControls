@@ -44,27 +44,25 @@ namespace DemoCommon
         {
             var nullDocumentSwitcher = d as DocumentNullSwitcher;
             object flowControl = e.NewValue;
-            if (flowControl is FlowDocumentReader flowDocumentReader)
+            switch (flowControl)
             {
-                nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
+                case FlowDocumentReader flowDocumentReader:
+                    nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
                     () => flowDocumentReader.Document,
                     (flowDocument) => flowDocumentReader.Document = flowDocument);
-            }
-            else if (flowControl is FlowDocumentScrollViewer flowDocumentScrollViewer)
-            {
-                nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
+                    break;
+                case FlowDocumentScrollViewer flowDocumentScrollViewer:
+                    nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
                     () => flowDocumentScrollViewer.Document,
                     (flowDocument) => flowDocumentScrollViewer.Document = flowDocument);
-            }
-            else if (flowControl is FlowDocumentPageViewer flowDocumentPageViewer)
-            {
-                nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
+                    break;
+                case FlowDocumentPageViewer flowDocumentPageViewer:
+                    nullDocumentSwitcher._flowControlDocument = new FlowControlDocument(
                     () => flowDocumentPageViewer.Document as FlowDocument,
                     (flowDocument) => flowDocumentPageViewer.Document = flowDocument);
-            }
-            else
-            {
-                throw new Exception("Not a flow control");
+                    break;
+                default:
+                    throw new Exception("Not a flow control");
             }
         }
 

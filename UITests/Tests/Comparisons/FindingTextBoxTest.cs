@@ -2,7 +2,6 @@
 using FlaUI.Core.Tools;
 using UIAutomationHelpers;
 using UITests.NUnit;
-using UITests.TestHelpers;
 
 namespace UITests.Tests.Comparisons
 {

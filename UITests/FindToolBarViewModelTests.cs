@@ -6,8 +6,8 @@ namespace UITests
 {
     internal sealed class FindToolBarViewModelTests
     {
-        private Mock<IFinder> _mockFinder;
-        private FindToolBarViewModel _findToolBarViewModel;
+        private Mock<IFinder> _mockFinder = null!;
+        private FindToolBarViewModel _findToolBarViewModel = null!;
 
         [SetUp]
         public void Setup()

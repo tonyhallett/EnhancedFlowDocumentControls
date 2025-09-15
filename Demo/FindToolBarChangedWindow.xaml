@@ -19,7 +19,7 @@
         Orientation="Horizontal">
         <findControls:FindTextBox
           Background="Green"
-          Foreground="White"/>
+          Foreground="White" />
         <findControls:FindNextPreviousButtons
           Foreground="Blue" />
       </StackPanel>
@@ -27,17 +27,21 @@
   </Window.Resources>
   <DockPanel
     LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-            <Button x:Name="ChangeFindToolBarDelayedButton" AutomationProperties.AutomationId="ChangeFindToolBarDelayedButton"
-                Click="ChangeDelayedClick">
-                Change delayed
-            </Button>
-            <Button x:Name="ChangeFindToolBarImmediateButton" AutomationProperties.AutomationId="ChangeFindToolBarImmediateButton"
-     Click="ChangeClick">
-                Change
-            </Button>
-        </StackPanel>
-    
+    <StackPanel
+      DockPanel.Dock="Top"
+      Orientation="Horizontal">
+      <Button x:Name="ChangeFindToolBarDelayedButton"
+        AutomationProperties.AutomationId="ChangeFindToolBarDelayedButton"
+        Click="ChangeDelayedClick">
+        Change delayed
+      </Button>
+      <Button x:Name="ChangeFindToolBarImmediateButton"
+        AutomationProperties.AutomationId="ChangeFindToolBarImmediateButton"
+        Click="ChangeClick">
+        Change
+      </Button>
+    </StackPanel>
+
     <flowControls:EnhancedFlowDocumentReader x:Name="EnhancedFlowDocumentReader">
       <flowControls:EnhancedFlowDocumentReader.Document>
         <FlowDocument>
@@ -53,7 +57,7 @@
             Orientation="Horizontal">
             <findControls:FindTextBox
               Background="Yellow"
-              Foreground="Black"/>
+              Foreground="Black" />
             <findControls:FindNextPreviousButtons
               Foreground="Orange" />
           </StackPanel>
