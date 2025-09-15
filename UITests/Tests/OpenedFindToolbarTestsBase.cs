@@ -2,7 +2,7 @@
 using UIAutomationHelpers;
 using UITests.TestHelpers;
 
-namespace UITests.Tests.Comparisons
+namespace UITests.Tests
 {
     internal abstract class OpenedFindToolbarTestsBase(string windowTypeName, FrameworkVersion frameworkVersion)
         : FindToolBarTestsBase(windowTypeName, frameworkVersion)

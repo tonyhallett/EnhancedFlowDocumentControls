@@ -2,6 +2,6 @@
 {
     public interface IFindToolBarViewModelAware
     {
-        FindToolBarViewModel FindToolBarViewModel { get; set; }
+        IFindToolBarViewModel FindToolBarViewModel { get; set; }
     }
 }

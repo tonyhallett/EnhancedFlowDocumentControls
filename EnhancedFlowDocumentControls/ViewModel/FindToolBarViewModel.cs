@@ -8,10 +8,11 @@ using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
-    public class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters
+    public class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindToolBarViewModel
     {
         private readonly IFinder _finder;
         private string _findText;
+        private bool _allowSearchingWhenEmptyText;
         private bool _isSearchUp;
         private bool _matchWholeWord;
         private bool _matchCase;
@@ -25,7 +26,7 @@ namespace EnhancedFlowDocumentControls.ViewModel
         public object OriginalDataContext
         {
             get => _originalDataContext;
-            set
+            private set
             {
                 if (_originalDataContext == value)
                 {
@@ -68,7 +69,7 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
                 _findText = value;
                 OnPropertyChanged(nameof(FindText));
-                RaiseCommandCanExecuteChanged();
+                RaisesCommandCanExecuteChanged();
             }
         }
 
@@ -130,13 +131,23 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
         public ICommand PreviousCommand { get; }
 
+        public bool AllowSearchingWhenEmptyText
+        {
+            get => _allowSearchingWhenEmptyText;
+            set
+            {
+                _allowSearchingWhenEmptyText = value;
+                RaisesCommandCanExecuteChanged();
+            }
+        }
+
         private void FindNext() => Find(false);
 
         private void FindPrevious() => Find(true);
 
-        private bool CanFind() => !string.IsNullOrWhiteSpace(FindText);
+        private bool CanFind() => AllowSearchingWhenEmptyText || !string.IsNullOrWhiteSpace(FindText);
 
-        private void RaiseCommandCanExecuteChanged()
+        private void RaisesCommandCanExecuteChanged()
         {
             (NextCommand as RelayCommand).NotifyCanExecuteChanged();
             (PreviousCommand as RelayCommand).NotifyCanExecuteChanged();

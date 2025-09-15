@@ -39,5 +39,11 @@ namespace UIAutomationHelpers
 
         public static RadioButton? FindPinkPaletteRadioButton(Window window)
             => window.FindFirstDescendant(cf => cf.ByName("Pink")).AsRadioButton();
+
+        public static Button? FindFindPreviousButton(Window window)
+            => window.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.FindPreviousButton)).AsButton();
+
+        public static Button? FindFindNextButton(Window window)
+            => window.FindFirstDescendant(cf => cf.ByAutomationId(AutomationIds.FindNextButton)).AsButton();
     }
 }

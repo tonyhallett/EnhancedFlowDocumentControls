@@ -12,85 +12,70 @@ namespace UITests.Tests.Comparisons
         [Test]
         public void Should_Navigate_As_Expected()
         {
+            // due to Enhanced commands disabled until text.
             FocusFindTextAndSetText("a");
 
-            Typer.TypeTab();
-            AssertPreviousButton();
+            List<(Action Navigation, Action FocusedElementAssertion)> navigationFocusAsserts = [
+                (TabOnce, AssertIsPreviousButton),
+                (TabOnce, AssertIsNextButton),
+                (Typer.TypeLeft,  AssertIsPreviousButton),
+                (Typer.TypeRight, AssertIsNextButton),
+                (TabOnce, AssertIsDropDownMenuItem),
 
-            Typer.TypeTab();
-            AssertNextButton();
+                // open the drop down, focuses first
+                (DownOnce, AssertIsTopMenuItem),
+                (DownOnce, AssertIsThirdMenuItem),
+                (TabOnce, AssertIsSecondMenuItem),
+                (TabOnce, AssertIsThirdMenuItem),
+                (TabOnce, AssertIsFourthMenuItem),
+                (TabOnce, AssertIsBottomMenuItem),
 
-            Typer.TypeLeft();
-            AssertPreviousButton();
+                // tab cyles
+                (TabOnce, AssertIsTopMenuItem),
+                (Typer.TypeShiftTab, AssertIsBottomMenuItem),
+                (Typer.TypeShiftTab, AssertIsFourthMenuItem),
+                (UpOnce, AssertIsThirdMenuItem),
+                (UpOnce, AssertIsSecondMenuItem),
+                (UpOnce, AssertIsTopMenuItem),
 
-            Typer.TypeRight();
-            AssertNextButton();
+                // up cycles
+                (UpOnce, AssertIsBottomMenuItem),
 
-            Typer.TypeTab();
-            AssertDromDownMenuItem();
+                // down cycles
+                (DownOnce, AssertIsTopMenuItem)
+            ];
 
-            Typer.TypeDown(); // open the drop down, focuses first
-            AssertTopMenuItem();
+            navigationFocusAsserts.ForEach(navigationFocusAssert =>
+            {
+                navigationFocusAssert.Navigation();
+                navigationFocusAssert.FocusedElementAssertion();
+            });
 
-            Typer.TypeTab();
-            AssertSecondMenuItem();
-
-            Typer.TypeTab();
-            AssertThirdMenuItem();
-
-            Typer.TypeTab();
-            AssertFourthMenuItem();
-
-            Typer.TypeTab();
-            AssertBottomMenuItem();
-
-            // tab cyles
-            Typer.TypeTab();
-            AssertTopMenuItem();
-
-            Typer.TypeShiftTab();
-            AssertBottomMenuItem();
-
-            Typer.TypeShiftTab();
-            AssertFourthMenuItem();
-
-            Typer.TypeUp();
-            AssertThirdMenuItem();
-
-            Typer.TypeUp();
-            AssertSecondMenuItem();
-
-            Typer.TypeUp();
-            AssertTopMenuItem();
-
-            // up cycles
-            Typer.TypeUp();
-            AssertBottomMenuItem();
-
-            Typer.TypeDown();
-            AssertTopMenuItem();
+            static void TabOnce() => Typer.TypeTab();
+            static void DownOnce() => Typer.TypeDown();
+            static void UpOnce() => Typer.TypeUp();
 
             // todo navigation away
         }
 
-        private void AssertDromDownMenuItem()
+        private void AssertIsDropDownMenuItem()
             => Assert.That(Window.Automation.FocusedElement().ControlType, Is.EqualTo(ControlType.MenuItem));
 
-        private void AssertPreviousButton() => AssertButton("FindPreviousButton");
+        private void AssertIsPreviousButton() => AssertButton(AutomationIds.FindPreviousButton);
 
-        private void AssertNextButton() => AssertButton("FindNextButton");
+        private void AssertIsNextButton() => AssertButton(AutomationIds.FindNextButton);
 
         private void AssertButton(string automationId) => AssertFocusedElement("Button", automationId);
 
-        private void AssertTopMenuItem() => AssertMenuItem("OptionsWholeWordMenuItem");
+        private void AssertIsTopMenuItem() => AssertMenuItem(AutomationIds.WholeWordMenuItem);
 
-        private void AssertSecondMenuItem() => AssertMenuItem("OptionsCaseMenuItem");
+        private void AssertIsSecondMenuItem() => AssertMenuItem(AutomationIds.CaseMenuItem);
 
-        private void AssertThirdMenuItem() => AssertMenuItem("OptionsDiacriticMenuItem");
+        private void AssertIsThirdMenuItem() => AssertMenuItem(AutomationIds.DiacriticMenuItem);
 
-        private void AssertFourthMenuItem() => AssertMenuItem("OptionsKashidaMenuItem");
+        private void AssertIsFourthMenuItem() => AssertMenuItem(AutomationIds.KashidaMenuItem);
 
-        private void AssertBottomMenuItem() => AssertMenuItem("OptionsAlefHamzaMenuItem");
+        private void AssertIsBottomMenuItem() => AssertMenuItem(AutomationIds.AlefHamzaMenuItem);
 
         private void AssertMenuItem(string automationId) => AssertFocusedElement("MenuItem", automationId);
 

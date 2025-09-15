@@ -29,9 +29,41 @@ FindToolbar.xaml obtained from PresentationUI ms/internal/documents/findtoolbar.
 
 For each of the three flow document controls
 
-Set the FindToolbar property in xaml and bind to the properties of the FindToolBarViewModel.
+Set the FindToolbar property in xaml and bind to the properties of the IFindToolBarViewModel.
 
-The FindToolBarViewModel will be available via either of two methods.
+```cs
+
+    public interface IFindToolBarViewModel
+    {
+        bool AllowSearchingWhenEmptyText { get; set; }
+
+        string FindText { get; set; }
+
+        bool IsSearchDown { get; }
+
+        bool IsSearchUp { get; }
+
+        bool MatchAlefHamza { get; set; }
+
+        bool MatchCase { get; set; }
+
+        bool MatchDiacritic { get; set; }
+
+        bool MatchKashida { get; set; }
+
+        bool MatchWholeWord { get; set; }
+
+        ICommand NextCommand { get; }
+
+        object OriginalDataContext { get; }
+
+        ICommand PreviousCommand { get; }
+
+```
+
+Set AllowSearchingWhenEmptyText to true to enable Next and Previous buttons when the FindText is empty.
+
+The IFindToolBarViewModel will be available via either of two methods.
 
 If the root element of the FindToolbar implements IFindToolBarViewModelAware it will be available on the FindToolBarViewModel property.
 
@@ -41,7 +73,9 @@ the DataContext of the FindRestylingFlowDocumentReader will be available on the 
 
 FindToolBarViewModel IFindToolBarViewModelAware bound controls are provided for the parts of the find toolbar and are pretty much the same as the original.
 
-FindToolbar needs to be the root element as it is IFindToolBarViewModelAware, the other controls RelativeSource bind to it.
+These controls, FindTextBox, FindNextPreviousButtons and FindMenu, RelativeSource bind to it.
+
+The FindToolbar control is IFindToolBarViewModelAware and can be used as the FindToolBar property of the EnhancedFlowDocumentReader, EnhancedFlowDocumentPageViewer and EnhancedFlowDocumentScrollViewer.
 
 FindTextBox is a TextBox and a hint Label, both with Transparent Background.
 

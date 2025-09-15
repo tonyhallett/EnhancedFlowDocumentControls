@@ -10,7 +10,7 @@ namespace EnhancedFlowDocumentControls.FindToolbarControls
                 typeof(FindToolBar),
                 new FrameworkPropertyMetadata(typeof(FindToolBar)));
 
-        public FindToolBarViewModel FindToolBarViewModel
+        public IFindToolBarViewModel FindToolBarViewModel
         {
             get => (FindToolBarViewModel)GetValue(FindToolBarViewModelProperty);
             set => SetValue(FindToolBarViewModelProperty, value);
