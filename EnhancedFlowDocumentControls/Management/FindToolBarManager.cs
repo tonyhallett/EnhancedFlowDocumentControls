@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,61 +10,43 @@ namespace EnhancedFlowDocumentControls.Management
 {
     internal class FindToolBarManager
     {
-        internal static class DocumentViewHelper
-        {
-            private static readonly MethodInfo s_keyDownHelperMethod;
-
-            static DocumentViewHelper()
-            {
-                Type documentViewHelperType = typeof(FlowDocumentPageViewer).Assembly.GetType("MS.Internal.Documents.DocumentViewerHelper");
-                s_keyDownHelperMethod = documentViewHelperType.GetMethod("KeyDownHelper", BindingFlags.Static | BindingFlags.NonPublic);
-            }
-
-            public static void KeyDownHelper(KeyEventArgs e, DependencyObject findToolBarHost)
-                => s_keyDownHelperMethod.Invoke(null, new object[] { e, findToolBarHost });
-        }
-
-        internal class FlowControlReflector
-        {
-            private static readonly Dictionary<Type, FlowControlReflector> s_flowControlReflectorLookup;
-
-            static FlowControlReflector()
-            {
-                var types = new List<Type> { typeof(FlowDocumentPageViewer), typeof(FlowDocumentScrollViewer), typeof(FlowDocumentReader) };
-                s_flowControlReflectorLookup = types.ToDictionary(t => t, t => new FlowControlReflector(t));
-            }
-
-            private readonly PropertyInfo _canShowFindToolBarProperty;
-
-            private readonly FieldInfo _findToolBarHostField;
-
-            public FlowControlReflector(Type t)
-            {
-                _canShowFindToolBarProperty = t.GetProperty("CanShowFindToolBar", BindingFlags.Instance | BindingFlags.NonPublic);
-                _findToolBarHostField = t.GetField("_findToolBarHost", BindingFlags.Instance | BindingFlags.NonPublic);
-            }
-
-            public bool CanShowFindToolBar(object flowControl) => (bool)_canShowFindToolBarProperty.GetValue(flowControl);
-
-            public Decorator GetFindToolBarHost(object flowControl) => _findToolBarHostField.GetValue(flowControl) as Decorator;
-
-            public void SetFindToolBarHost(object flowControl, Decorator value) => _findToolBarHostField.SetValue(flowControl, value);
-
-            public static FlowControlReflector GetReflector(IEnhancedFlowDocumentControl enhancedFlowControl)
-            {
-                Type type = enhancedFlowControl.GetType();
-                return s_flowControlReflectorLookup.First(kvp => type.IsSubclassOf(kvp.Key)).Value;
-            }
-        }
-
         private readonly Action<Action> _dispatcher;
-        private FlowControlReflector _flowControlReflector;
+        private readonly AlertingFindToolBarHost _alertingFindToolBarHost;
+        private readonly IFlowControlReflectorFactory _flowControlReflectorFactory;
+        private readonly IDocumentViewHelper _documentViewerHelper;
+        private readonly IFindToolBarViewModelFactory _findToolBarViewModelFactory;
+        private IFlowControlReflector _flowControlReflector;
         private FrameworkElement _customFindToolBar;
         private Decorator _originalFindToolBarHost;
         private IEnhancedFlowDocumentControl _flowControl;
-        private FindToolBarViewModel _findToolBarViewModel;
+        private IFindableToolBarViewModel _findToolBarViewModel;
 
-        internal FindToolBarManager(Action<Action> dispatcher = null) => _dispatcher = dispatcher;
+        internal FindToolBarManager(Action<Action> dispatcher = null)
+            : this(
+                  new AlertingFindToolBarHost(),
+                  new FlowControlReflectorFactory(),
+                  new DocumentViewHelper(),
+                  new FindToolBarViewModelFactory(),
+                  dispatcher)
+        {
+        }
+
+        // ctor for tests
+        internal FindToolBarManager(
+            AlertingFindToolBarHost alertingFindToolBarHost,
+            IFlowControlReflectorFactory flowControlReflectorFactory,
+            IDocumentViewHelper documentViewerHelper,
+            IFindToolBarViewModelFactory findToolBarViewModelFactory,
+            Action<Action> dispatcher = null)
+        {
+            _dispatcher = dispatcher;
+            _alertingFindToolBarHost = alertingFindToolBarHost;
+            _flowControlReflectorFactory = flowControlReflectorFactory;
+            _documentViewerHelper = documentViewerHelper;
+            _findToolBarViewModelFactory = findToolBarViewModelFactory;
+            alertingFindToolBarHost.ShowToolBarEvent += AlertingFindToolBarHost_ShowToolBarEvent;
+            alertingFindToolBarHost.CloseToolBarEvent += AlertingFindToolBarHost_CloseToolBarEvent;
+        }
 
         private bool IsShowingFindToolbar => _originalFindToolBarHost.Child != null;
 
@@ -80,34 +59,24 @@ namespace EnhancedFlowDocumentControls.Management
 
         private void ReplaceToolBarHostFieldWithAlertingNotInTree()
         {
-            _flowControlReflector = FlowControlReflector.GetReflector(_flowControl);
+            _flowControlReflector = _flowControlReflectorFactory.GetReflector(_flowControl);
             _originalFindToolBarHost = _flowControlReflector.GetFindToolBarHost(_flowControl);
-
-            var alertingFindToolBarHost = new AlertingFindToolBarHost();
-            alertingFindToolBarHost.ShowToolBarEvent += AlertingFindToolBarHost_ShowToolBarEvent;
-            alertingFindToolBarHost.CloseToolBarEvent += AlertingFindToolBarHost_CloseToolBarEvent;
-            _flowControlReflector.SetFindToolBarHost(_flowControl, alertingFindToolBarHost);
+            _flowControlReflector.SetFindToolBarHost(_flowControl, _alertingFindToolBarHost);
         }
 
-        // includes relevant parts of DocumentViewerHelper.ToggleFindToolBar
         private void AlertingFindToolBarHost_CloseToolBarEvent(object sender, EventArgs e)
         {
             _findToolBarViewModel = null;
             _originalFindToolBarHost.Child = null;
-            _originalFindToolBarHost.Visibility = Visibility.Collapsed;
-            KeyboardNavigation.SetTabNavigation(_originalFindToolBarHost, KeyboardNavigationMode.None);
-            _originalFindToolBarHost.ClearValue(FocusManager.IsFocusScopeProperty);
+            _documentViewerHelper.ToggleFindToolBarHost(_originalFindToolBarHost, false);
         }
 
-        // includes relevant parts of DocumentViewerHelper.ToggleFindToolBar
         private void AlertingFindToolBarHost_ShowToolBarEvent(object sender, ToolBar findToolBar)
         {
             FrameworkElement originalDataContextElement = _customFindToolBar is IFindToolBarViewModelAware ? null : _flowControl as FrameworkElement;
-            _findToolBarViewModel = new FindToolBarViewModel(new FindToolBarWrapper(findToolBar), originalDataContextElement);
+            _findToolBarViewModel = _findToolBarViewModelFactory.Create(findToolBar, originalDataContextElement);
             AddCustomFindToolBarToHost();
-            _originalFindToolBarHost.Visibility = Visibility.Visible;
-            KeyboardNavigation.SetTabNavigation(_originalFindToolBarHost, KeyboardNavigationMode.Continue);
-            FocusManager.SetIsFocusScope(_originalFindToolBarHost, true);
+            _documentViewerHelper.ToggleFindToolBarHost(_originalFindToolBarHost, true);
             _customFindToolBar.Loaded += (_, __) => ReadyTextBox();
         }
 
@@ -193,10 +162,12 @@ namespace EnhancedFlowDocumentControls.Management
         private bool ShouldF3Search(KeyEventArgs e)
             => e.Key == Key.F3 && _flowControlReflector.CanShowFindToolBar(_flowControl) && IsShowingFindToolbar;
 
+        private void KeyDownHandler(KeyEventArgs e) => _documentViewerHelper.KeyDownHelper(e, _originalFindToolBarHost);
+
         internal static void KeyDownHandler(object sender, KeyEventArgs e)
         {
-            Decorator originalFindToolBarHost = (sender as IEnhancedFlowDocumentControl).FindToolBarManager._originalFindToolBarHost;
-            DocumentViewHelper.KeyDownHelper(e, originalFindToolBarHost);
+            FindToolBarManager findToolBarManager = (sender as IEnhancedFlowDocumentControl).FindToolBarManager;
+            findToolBarManager.KeyDownHandler(e);
         }
 
         // unlikely and not documented.

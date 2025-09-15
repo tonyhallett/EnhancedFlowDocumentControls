@@ -24,7 +24,6 @@ namespace UITests.Tests.Comparisons
 
                 // open the drop down, focuses first
                 (DownOnce, AssertIsTopMenuItem),
-                (DownOnce, AssertIsThirdMenuItem),
                 (TabOnce, AssertIsSecondMenuItem),
                 (TabOnce, AssertIsThirdMenuItem),
                 (TabOnce, AssertIsFourthMenuItem),

@@ -8,7 +8,7 @@ using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
-    internal class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindToolBarViewModel
+    internal class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindableToolBarViewModel
     {
         private readonly IFinder _finder;
         private string _findText;
@@ -154,13 +154,13 @@ namespace EnhancedFlowDocumentControls.ViewModel
         }
         #endregion
 
-        internal void Find(bool searchUp)
+        public void Find(bool searchUp)
         {
             IsSearchUp = searchUp;
             Find();
         }
 
-        internal void Find() => _finder.Find(this);
+        public void Find() => _finder.Find(this);
 
         #region INotifyPropertyChanged
         protected virtual void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")

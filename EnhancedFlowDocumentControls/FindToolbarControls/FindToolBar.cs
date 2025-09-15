@@ -12,11 +12,11 @@ namespace EnhancedFlowDocumentControls.FindToolBarControls
 
         public IFindToolBarViewModel FindToolBarViewModel
         {
-            get => (FindToolBarViewModel)GetValue(FindToolBarViewModelProperty);
+            get => (IFindToolBarViewModel)GetValue(FindToolBarViewModelProperty);
             set => SetValue(FindToolBarViewModelProperty, value);
         }
 
         public static readonly DependencyProperty FindToolBarViewModelProperty =
-            DependencyProperty.Register(nameof(FindToolBarViewModel), typeof(FindToolBarViewModel), typeof(FindToolBar), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(FindToolBarViewModel), typeof(IFindToolBarViewModel), typeof(FindToolBar), new PropertyMetadata(null));
     }
 }
