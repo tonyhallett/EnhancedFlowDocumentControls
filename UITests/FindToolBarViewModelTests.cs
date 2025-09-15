@@ -96,7 +96,7 @@ namespace UITests
                 Assert.That(_findToolBarViewModel.IsSearchDown, Is.EqualTo(!expectedIsSearchUp));
             });
 
-        private seald class CanExecuteHelper
+        private sealed class CanExecuteHelper
         {
             private readonly FindToolBarViewModel _findToolBarViewModel;
             private bool _nextCanExecuteChanged;
