@@ -121,10 +121,12 @@ namespace Tests
             object newOriginalDataContext = null;
             findToolBarViewModel.PropertyChanged += (s, args) =>
             {
-                if (args.PropertyName == nameof(findToolBarViewModel.OriginalDataContext))
+                if (args.PropertyName != nameof(findToolBarViewModel.OriginalDataContext))
                 {
-                    newOriginalDataContext = findToolBarViewModel.OriginalDataContext;
+                    return;
                 }
+
+                newOriginalDataContext = findToolBarViewModel.OriginalDataContext;
             };
             originalDataContextElement.DataContext = "NewDataContext";
             Assert.That(newOriginalDataContext, Is.EqualTo("NewDataContext"));

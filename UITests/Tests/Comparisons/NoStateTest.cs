@@ -5,6 +5,7 @@ using UITests.TestHelpers;
 
 namespace UITests.Tests.Comparisons
 {
+    // todo - occasional fails - use Retry
     [CommonComparisonTest]
     internal sealed class NoStateTest(string windowTypeName, FrameworkVersion frameworkVersion)
         : FindToolBarTestsBase(windowTypeName, frameworkVersion)

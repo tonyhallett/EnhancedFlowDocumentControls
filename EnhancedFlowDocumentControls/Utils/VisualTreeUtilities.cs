@@ -11,7 +11,7 @@ namespace EnhancedFlowDocumentControls.Utils
         {
             // Check if parent itself matches
             if (parent is T parentAsT && parentAsT.Name == name)
-            { 
+            {
                 return parentAsT;
             }
 

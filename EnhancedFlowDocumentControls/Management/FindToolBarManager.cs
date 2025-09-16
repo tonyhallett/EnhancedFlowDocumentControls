@@ -8,7 +8,7 @@ using EnhancedFlowDocumentControls.ViewModel;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class FindToolBarManager
+    internal sealed class FindToolBarManager
     {
         private readonly Action<Action> _dispatcher;
         private readonly AlertingFindToolBarHost _alertingFindToolBarHost;

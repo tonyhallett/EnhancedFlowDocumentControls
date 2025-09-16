@@ -1,5 +1,5 @@
 ﻿using UIAutomationHelpers;
-using UITests.NUnit;
+using UITests.TestHelpers;
 
 namespace UITests.Tests.Enhanced
 {

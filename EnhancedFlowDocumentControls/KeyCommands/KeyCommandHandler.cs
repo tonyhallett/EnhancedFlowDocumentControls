@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace EnhancedFlowDocumentControls.KeyCommands
 {
-    internal class KeyCommandHandler
+    internal sealed class KeyCommandHandler
     {
         private readonly UIElement _target;
         private readonly List<KeyCommand> _keyCommands;

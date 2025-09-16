@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class AlertingFindToolBarHost : Decorator
+    internal sealed class AlertingFindToolBarHost : Decorator
     {
         private ToolBar _findToolBar;
 

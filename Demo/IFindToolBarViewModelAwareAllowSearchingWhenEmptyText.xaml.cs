@@ -7,7 +7,7 @@ namespace Demo
     /// <summary>
     /// Interaction logic for IFindToolBarViewModelAwareAllowSearchingWhenEmptyText.xaml.
     /// </summary>
-    public partial class IFindToolBarViewModelAwareAllowSearchingWhenEmptyText : UserControl, IFindToolBarViewModelAware
+    internal sealed partial class IFindToolBarViewModelAwareAllowSearchingWhenEmptyText : UserControl, IFindToolBarViewModelAware
     {
         public IFindToolBarViewModelAwareAllowSearchingWhenEmptyText() => InitializeComponent();
 

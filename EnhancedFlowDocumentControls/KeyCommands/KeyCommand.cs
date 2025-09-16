@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace EnhancedFlowDocumentControls.KeyCommands
 {
-    internal class KeyCommand
+    internal sealed class KeyCommand
     {
         private static readonly List<RoutedUICommand> s_keyCommands = new List<RoutedUICommand>
         {

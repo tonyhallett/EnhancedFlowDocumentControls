@@ -1,4 +1,4 @@
-﻿namespace UITests.NUnit
+﻿namespace UITests.TestHelpers
 {
     internal static class DemoWindowTypeNames
     {

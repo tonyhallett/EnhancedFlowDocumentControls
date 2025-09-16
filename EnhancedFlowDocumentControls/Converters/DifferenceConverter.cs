@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace EnhancedFlowDocumentControls.Converters
 {
-    internal class DifferenceConverter : IValueConverter
+    internal sealed class DifferenceConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

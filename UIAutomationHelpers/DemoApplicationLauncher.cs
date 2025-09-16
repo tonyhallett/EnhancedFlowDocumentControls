@@ -53,6 +53,9 @@ namespace UIAutomationHelpers
         }
 
         private static string GetExePath(string binDirectory, FrameworkVersion frameworkVersion, string projectName, bool isDebug)
-            => Path.Combine(binDirectory, isDebug ? "Debug" : "Release", frameworkVersion.ToString().ToLower(), $"{projectName}.exe");
+            => Path.Combine(binDirectory, isDebug ? "Debug" : "Release", GetFrameworkVersionDirectoryName(frameworkVersion), $"{projectName}.exe");
+
+        private static string GetFrameworkVersionDirectoryName(FrameworkVersion frameworkVersion)
+            => frameworkVersion == FrameworkVersion.Net6Windows ? "net6.0-windows" : frameworkVersion.ToString().ToLower();
     }
 }

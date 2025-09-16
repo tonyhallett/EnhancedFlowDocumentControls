@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class FlowControlReflector : IFlowControlReflector
+    internal sealed class FlowControlReflector : IFlowControlReflector
     {
         private readonly PropertyInfo _canShowFindToolBarProperty;
 

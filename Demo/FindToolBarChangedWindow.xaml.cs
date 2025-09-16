@@ -7,7 +7,7 @@ namespace Demo
     /// <summary>
     /// Interaction logic for FindToolBarChangedWindow.xaml.
     /// </summary>
-    public partial class FindToolBarChangedWindow : Window
+    internal sealed partial class FindToolBarChangedWindow : Window
     {
         public FindToolBarChangedWindow() => InitializeComponent();
 

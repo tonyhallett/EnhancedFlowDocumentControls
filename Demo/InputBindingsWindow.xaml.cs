@@ -5,7 +5,7 @@ namespace Demo
     /// <summary>
     /// Interaction logic for InputBindingsWindow.xaml.
     /// </summary>
-    public partial class InputBindingsWindow : Window
+    internal sealed partial class InputBindingsWindow : Window
     {
         public InputBindingsWindow() => InitializeComponent();
     }

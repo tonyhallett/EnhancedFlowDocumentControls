@@ -11,7 +11,6 @@ using static Tests.FindToolBarManagerTests.ToggleTrueTests;
 
 namespace Tests.FindToolBarManagerTests
 {
-
     [RequiresThread(ApartmentState.STA)]
     internal abstract class TestsBase
     {

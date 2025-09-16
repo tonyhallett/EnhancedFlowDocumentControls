@@ -1,12 +1,8 @@
-﻿using System.Threading;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using NUnit.Framework;
 
 namespace Tests.Helpers
 {
-
     public class TestPresentationSource : PresentationSource
     {
         public override Visual RootVisual { get; set; }
@@ -15,5 +11,4 @@ namespace Tests.Helpers
 
         protected override CompositionTarget GetCompositionTargetCore() => throw new System.NotImplementedException();
     }
-
 }

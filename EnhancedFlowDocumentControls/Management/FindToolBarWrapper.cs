@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class FindToolBarWrapper : IFinder
+    internal sealed class FindToolBarWrapper : IFinder
     {
         private sealed class ReflectionMembers
         {

@@ -5,7 +5,7 @@ namespace Demo
     /// <summary>
     /// Interaction logic for App.xaml.
     /// </summary>
-    public partial class App : Application
+    internal sealed partial class App : Application
     {
         private void Application_Startup(object sender, StartupEventArgs e) => InstantiateWindow(e.Args).Show();
 
@@ -13,7 +13,7 @@ namespace Demo
 
         private Window InstantiateWindow(string[] args) => InstantiateWindow(GetWindowTypeName(args));
 
-        private Window InstantiateWindow(string windowType)
+        private static Window InstantiateWindow(string windowType)
             => typeof(App).Assembly.GetType("Demo." + windowType).GetConstructor(new System.Type[0]).Invoke(null) as Window;
     }
 }

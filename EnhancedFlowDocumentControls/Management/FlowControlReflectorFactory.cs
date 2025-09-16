@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class FlowControlReflectorFactory : IFlowControlReflectorFactory
+    internal sealed class FlowControlReflectorFactory : IFlowControlReflectorFactory
     {
         private static readonly Dictionary<Type, FlowControlReflector> s_flowControlReflectorLookup;
 

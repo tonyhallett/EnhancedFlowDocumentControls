@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace EnhancedFlowDocumentControls.Converters
 {
-    internal class NullToUnsetValueConverter : IValueConverter
+    internal sealed class NullToUnsetValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             => value ?? DependencyProperty.UnsetValue;

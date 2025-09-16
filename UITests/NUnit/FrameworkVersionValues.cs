@@ -7,6 +7,7 @@ namespace UITests.NUnit
     {
         private static ReadOnlyCollection<FrameworkVersion> Values { get; } = Enum.GetValues<FrameworkVersion>().AsReadOnly();
 
-        public static IEnumerable<FrameworkVersion> Get() => [FrameworkVersion.Net472];
+        // change to only test on specific version
+        public static IEnumerable<FrameworkVersion> Get() => Values;
     }
 }

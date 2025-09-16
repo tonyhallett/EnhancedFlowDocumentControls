@@ -53,8 +53,7 @@ namespace Tests.FindToolBarManagerTests
             ShowToolBar();
 
             KeyEventArgs keyEventArgs = KeyEventArgsCreator.Create(Key.F3, isShift ? ModifierKeys.Shift : ModifierKeys.None);
-            void BaseKeyDown(KeyEventArgs _) => Assert.Fail();
-            FindToolBarManager.KeyDown(keyEventArgs, BaseKeyDown);
+            FindToolBarManager.KeyDown(keyEventArgs, _ => Assert.Fail());
 
             Assert.That(keyEventArgs.Handled, Is.True);
             MockFindableToolBarViewModel.Verify(findableToolBarViewModel => findableToolBarViewModel.Find(isShift));

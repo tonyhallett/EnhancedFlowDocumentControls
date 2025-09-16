@@ -7,7 +7,7 @@ using EnhancedFlowDocumentControls.Utils;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class WpfUtilities : IWpfUtilities
+    internal sealed class WpfUtilities : IWpfUtilities
     {
         private FrameworkElement _customFindToolBar;
         private RoutedEventHandler _loadedHandler;

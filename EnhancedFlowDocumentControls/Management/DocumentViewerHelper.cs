@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class DocumentViewerHelper : IDocumentViewerHelper
+    internal sealed class DocumentViewerHelper : IDocumentViewerHelper
     {
         private static readonly MethodInfo s_keyDownHelperMethod;
 

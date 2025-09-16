@@ -7,5 +7,6 @@
         Net471,
         Net472,
         Net48,
+        Net6Windows,
     }
 }
