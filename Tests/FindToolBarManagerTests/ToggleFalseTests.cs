@@ -2,7 +2,7 @@
 
 namespace Tests.FindToolBarManagerTests
 {
-    internal sealed class ToggleFalseTests : FindToolBarManagerTestsBase
+    internal sealed class ToggleFalseTests : TestsBase
     {
         [SetUp]
         public void SetUp()

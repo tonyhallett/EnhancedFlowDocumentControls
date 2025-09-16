@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Tests.FindToolBarManagerTests
 {
-    internal sealed class ToggleTrueTests : FindToolBarManagerTestsBase
+    internal sealed class ToggleTrueTests : TestsBase
     {
         [Test]
         public void Should_Set_The_ViewModel_On_IFindToolBarViewModelAware()

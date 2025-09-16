@@ -24,8 +24,8 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
         ICommand NextCommand { get; }
 
-        object OriginalDataContext { get; }
-
         ICommand PreviousCommand { get; }
+
+        object OriginalDataContext { get; }
     }
 }

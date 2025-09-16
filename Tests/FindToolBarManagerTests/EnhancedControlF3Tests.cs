@@ -8,7 +8,7 @@ using Tests.Helpers;
 
 namespace Tests.FindToolBarManagerTests
 {
-    internal class EnhancedControlF3Tests : FindToolBarManagerTestsBase
+    internal class EnhancedControlF3Tests : TestsBase
     {
         [SetUp]
         public void SetUp() => MockFindToolBarViewModelFactory.Setup(

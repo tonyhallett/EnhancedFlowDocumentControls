@@ -247,7 +247,7 @@ internal bool CanShowFindToolBar => this._findToolBarHost != null && this.Docume
 
 ---
 
-# Solution
+# Solution notes
 
 Regardless of the solution, executing find should probably be with OnFindInvoked.
 
@@ -261,3 +261,89 @@ with a `FindToolBar` that has had the find properties set based upon the provide
 
 **OnKeyDown different behaviour for OnKeyDown**
 FlowDocumentPageViewer does not immediately exit when e.Handled is true.
+
+# Implementation
+
+The work is done by the `FindToolBarManager`.
+
+Each of the flow controls create an instance and call into it or call its static method.
+
+## Setup from OnApplyTemplate
+
+```C#
+_findToolBarManager.Setup(this, FindToolBar);
+```
+
+This will use reflection to change the `_findToolBarHost` field to a custom `Decorator`, `AlertingFindToolBarHost`, that will raise an event when the `Child` ( `FindToolBar` ) changes.
+This allows for replicating the `DocumentViewerHelper.ToggleFindToolBar` behaviour without having to deal with the conditions behind it.
+This also is in line with
+
+```C#
+private FindToolBar FindToolBar => this._findToolBarHost == null ? (FindToolBar) null : this._findToolBarHost.Child as FindToolBar;
+```
+
+The original host is kept.
+
+## The base flow control toggles to show.
+
+The `AlertingFindToolBarHost` raises the event and the following happens.
+
+The `FindToolBar` property from the enhanced control is set as the child of the original host and a `FindToolBarViewModel` is created and linked to the FindToolBar in one of two ways.
+If the FindToolBar is `IFindToolBarViewModelAware` then its `FindToolBarViewModel` property is set otherwise it is set as the `DataContext` with the `FindToolBarViewModel` retaining the `OriginalDataContext`.
+
+The `FindToolBarViewModel` is passed a `FindToolBarWrapper` that wraps the original `FindToolBar`.
+The wrapper has `public void Find(IFindParameters findParameters)` whichs sets the `FindToolBar` properties pertaining to search and invokes `OnFindClick` with reflection.
+
+The `FindToolBarViewModel` implements `IFindParameters`, these properties are bound to in the tree of the replacement find toolbar.
+The wrapper `Find` method will be invoked from the `FindToolBarViewModel` `NextCommand` and `PreviousCommand` and also invoked from
+`OnKeyDown` when F3 or Shift F3 is pressed or when then the required find text box with x:Name `findTextBox` `TextBox.PreviewKeyDown` with enter key.
+
+The relevant internal `DocumentViewerHelper.ToggleFindToolBar` code is replicated in the `DocumentViewerHelper.ToggleFindToolBarHost`.
+
+For F3 / Shift F3 functionality to work similarly across all 3 types they all pass the base method and the `FindToolBarManager` invokes base when necessary.
+
+```
+protected override void OnKeyDown(KeyEventArgs e) => _findToolBarManager.KeyDown(e, base.OnKeyDown);
+```
+
+```C#
+        internal void KeyDown(KeyEventArgs e, Action<KeyEventArgs> baseKeyDown)
+        {
+            if (IsShowingFindToolbar && e.Key == Key.F3)
+            {
+                bool shiftPressed = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+                _findToolBarViewModel.Find(shiftPressed);
+                e.Handled = true;
+                return;
+            }
+
+            baseKeyDown(e);
+        }
+```
+
+## The base flow control toggles to hide.
+
+The original host is cleared and `DocumentViewerHelper.ToggleFindToolBarHost`.
+
+## Other internal code replication
+
+The `Keyboard.KeyDownEvent` class handler that calls `DocumentViewerHelper.KeyDownHelper` is replicated with reflection.
+Each enhanced flow control adds a class handler, e.g
+
+```C#
+        static EnhancedFlowDocumentReader() => EventManager.RegisterClassHandler(
+                typeof(EnhancedFlowDocumentReader),
+                Keyboard.KeyDownEvent,
+                new KeyEventHandler(FindToolBarManager.KeyDownHandler),
+                true);
+
+```
+
+Each enhanced flow control implements below so that the static `FindToolBarManager` can get the `FindToolBarManager` instance.
+
+```C#
+    internal interface IEnhancedFlowDocumentControl
+    {
+        FindToolBarManager FindToolBarManager { get; }
+    }
+```

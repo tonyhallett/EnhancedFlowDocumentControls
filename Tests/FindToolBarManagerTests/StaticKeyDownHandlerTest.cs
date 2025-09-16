@@ -6,7 +6,7 @@ using Ftm = EnhancedFlowDocumentControls.Management.FindToolBarManager;
 
 namespace Tests.FindToolBarManagerTests
 {
-    internal class StaticKeyDownHandlerTest : FindToolBarManagerTestsBase
+    internal class StaticKeyDownHandlerTest : TestsBase
     {
         [Test]
         public void Should_Defer_To_DocumentViewHelper()

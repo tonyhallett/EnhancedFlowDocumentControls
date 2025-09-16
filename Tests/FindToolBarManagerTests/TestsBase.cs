@@ -13,7 +13,7 @@ namespace Tests.FindToolBarManagerTests
 {
 
     [RequiresThread(ApartmentState.STA)]
-    internal abstract class FindToolBarManagerTestsBase
+    internal abstract class TestsBase
     {
         protected ToolBar OriginalFindToolbar { get; } = new ToolBar();
 
