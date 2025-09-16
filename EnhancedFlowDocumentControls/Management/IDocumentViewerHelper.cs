@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal interface IDocumentViewHelper
+    internal interface IDocumentViewerHelper
     {
         void KeyDownHelper(KeyEventArgs e, DependencyObject findToolBarHost);
 

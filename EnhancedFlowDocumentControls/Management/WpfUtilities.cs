@@ -58,18 +58,6 @@ namespace EnhancedFlowDocumentControls.Management
             customFindToolBar.Loaded += loadedHandler;
         }
 
-        public F3KeyType GetF3KeyType(KeyEventArgs e)
-        {
-            if (e.Key == Key.F3)
-            {
-                e.Handled = true;
-                bool shiftPressed = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
-                return shiftPressed ? F3KeyType.ShiftF3 : F3KeyType.F3;
-            }
-
-            return F3KeyType.NotF3;
-        }
-
         public void Clear()
         {
             _findTextBox.KeyDown -= _previewKeyDownHandler;

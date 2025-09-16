@@ -6,11 +6,11 @@ using System.Windows.Input;
 
 namespace EnhancedFlowDocumentControls.Management
 {
-    internal class DocumentViewHelper : IDocumentViewHelper
+    internal class DocumentViewerHelper : IDocumentViewerHelper
     {
         private static readonly MethodInfo s_keyDownHelperMethod;
 
-        static DocumentViewHelper()
+        static DocumentViewerHelper()
         {
             Type documentViewHelperType = typeof(FlowDocumentPageViewer).Assembly.GetType("MS.Internal.Documents.DocumentViewerHelper");
             s_keyDownHelperMethod = documentViewHelperType.GetMethod("KeyDownHelper", BindingFlags.Static | BindingFlags.NonPublic);

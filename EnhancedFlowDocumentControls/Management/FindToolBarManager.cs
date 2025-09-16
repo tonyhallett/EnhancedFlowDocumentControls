@@ -13,7 +13,7 @@ namespace EnhancedFlowDocumentControls.Management
         private readonly Action<Action> _dispatcher;
         private readonly AlertingFindToolBarHost _alertingFindToolBarHost;
         private readonly IFlowControlReflectorFactory _flowControlReflectorFactory;
-        private readonly IDocumentViewHelper _documentViewerHelper;
+        private readonly IDocumentViewerHelper _documentViewerHelper;
         private readonly IFindToolBarViewModelFactory _findToolBarViewModelFactory;
         private readonly IWpfUtilities _wpfUtilities;
         private IFlowControlReflector _flowControlReflector;
@@ -26,7 +26,7 @@ namespace EnhancedFlowDocumentControls.Management
             : this(
                   new AlertingFindToolBarHost(),
                   new FlowControlReflectorFactory(),
-                  new DocumentViewHelper(),
+                  new DocumentViewerHelper(),
                   new FindToolBarViewModelFactory(),
                   new WpfUtilities(),
                   dispatcher)
@@ -37,7 +37,7 @@ namespace EnhancedFlowDocumentControls.Management
         internal FindToolBarManager(
             AlertingFindToolBarHost alertingFindToolBarHost,
             IFlowControlReflectorFactory flowControlReflectorFactory,
-            IDocumentViewHelper documentViewerHelper,
+            IDocumentViewerHelper documentViewerHelper,
             IFindToolBarViewModelFactory findToolBarViewModelFactory,
             IWpfUtilities wpfUtilities,
             Action<Action> dispatcher = null)
@@ -130,22 +130,16 @@ namespace EnhancedFlowDocumentControls.Management
         // the requirement to not call base is due to FlowDocumentPageViewer not immediately exiting when e.Handled is true - it still processes F3 itself
         internal void KeyDown(KeyEventArgs e, Action<KeyEventArgs> baseKeyDown)
         {
-            if (ConsiderF3Search())
+            if (IsShowingFindToolbar && e.Key == Key.F3)
             {
-                F3KeyType f3KeyType = _wpfUtilities.GetF3KeyType(e);
-                if (f3KeyType != F3KeyType.NotF3)
-                {
-                    bool searchUp = f3KeyType == F3KeyType.ShiftF3;
-                    _findToolBarViewModel.Find(searchUp);
-                    return;
-                }
+                bool shiftPressed = (e.KeyboardDevice.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+                _findToolBarViewModel.Find(shiftPressed);
+                e.Handled = true;
+                return;
             }
 
             baseKeyDown(e);
         }
-
-        private bool ConsiderF3Search()
-            => _flowControlReflector.CanShowFindToolBar(_flowControl) && IsShowingFindToolbar;
 
         private void KeyDownHandler(KeyEventArgs e) => _documentViewerHelper.KeyDownHelper(e, _originalFindToolBarHost);
 
