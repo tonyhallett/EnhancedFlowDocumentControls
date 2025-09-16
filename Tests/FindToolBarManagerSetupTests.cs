@@ -1,12 +1,14 @@
 ﻿using System.Windows.Controls;
 using EnhancedFlowDocumentControls.Management;
 using Moq;
+using NUnit.Framework;
 
-namespace UITests
+namespace Tests
 {
     internal sealed class FindToolBarManagerSetupTests
     {
         [Test]
+        [UiTest]
         public void Should_Replace_EnhancedFlowDocumentControl_ToolBarHost_Field_With_Alerting_When_Setup()
         {
             var alertingFindToolBarHost = new AlertingFindToolBarHost();

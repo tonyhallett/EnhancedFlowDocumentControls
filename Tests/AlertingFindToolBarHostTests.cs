@@ -1,16 +1,18 @@
 ﻿using System.Windows.Controls;
 using EnhancedFlowDocumentControls.Management;
+using NUnit.Framework;
 
-namespace UITests
+namespace Tests
 {
     internal sealed class AlertingFindToolBarHostTests
     {
         [Test]
+        [UiTest]
         public void Should_Raise_ShowToolBarEvent_When_Child_Set_To_ToolBar()
         {
             var host = new AlertingFindToolBarHost();
 
-            ToolBar? receivedToolBar = null;
+            ToolBar receivedToolBar = null;
             host.ShowToolBarEvent += (_, tb) => receivedToolBar = tb;
 
             var toolBar = new ToolBar();
@@ -20,6 +22,7 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Raise_CloseToolBarEvent_When_Child_Set_To_Null()
         {
             var host = new AlertingFindToolBarHost();
@@ -34,6 +37,7 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Return_The_ToolBar_From_Child_Property()
         {
             var host = new AlertingFindToolBarHost();

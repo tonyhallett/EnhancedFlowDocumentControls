@@ -1,13 +1,15 @@
-﻿using EnhancedFlowDocumentControls.Management;
+﻿using System;
+using EnhancedFlowDocumentControls.Management;
 using EnhancedFlowDocumentControls.ViewModel;
 using Moq;
+using NUnit.Framework;
 
-namespace UITests
+namespace Tests
 {
     internal sealed class FindToolBarViewModelTests
     {
-        private Mock<IFinder> _mockFinder = null!;
-        private FindToolBarViewModel _findToolBarViewModel = null!;
+        private Mock<IFinder> _mockFinder;
+        private FindToolBarViewModel _findToolBarViewModel;
 
         [SetUp]
         public void Setup()
@@ -52,7 +54,7 @@ namespace UITests
             _findToolBarViewModel.FindText = "abc";
             _findToolBarViewModel.PreviousCommand.Execute(null);
             AssertIsSearchUp(true);
-            _mockFinder!.Verify(finder => finder.Find(_findToolBarViewModel));
+            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
         }
 
         [Test]
@@ -61,7 +63,7 @@ namespace UITests
             _findToolBarViewModel.FindText = "abc";
             _findToolBarViewModel.NextCommand.Execute(null);
             AssertIsSearchUp(false);
-            _mockFinder!.Verify(finder => finder.Find(_findToolBarViewModel));
+            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
         }
 
         [Test]
@@ -69,7 +71,7 @@ namespace UITests
         {
             _findToolBarViewModel.Find(true);
             AssertIsSearchUp(true);
-            _mockFinder!.Verify(finder => finder.Find(_findToolBarViewModel));
+            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
         }
 
         [Test]
@@ -77,7 +79,7 @@ namespace UITests
         {
             _findToolBarViewModel.Find(false);
             AssertIsSearchUp(false);
-            _mockFinder!.Verify(finder => finder.Find(_findToolBarViewModel));
+            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
         }
 
         [TestCase(true)]
@@ -86,7 +88,45 @@ namespace UITests
             _findToolBarViewModel.Find(currentIsSearchUp);
             _findToolBarViewModel.Find();
             AssertIsSearchUp(currentIsSearchUp);
-            _mockFinder!.Verify(finder => finder.Find(_findToolBarViewModel), Times.Exactly(2));
+            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel), Times.Exactly(2));
+        }
+
+        [Test]
+        public void Should_Not_Have_OriginalDataContext_When_OriginalDataContextElement_Is_Null()
+            => Assert.That(_findToolBarViewModel.OriginalDataContext, Is.Null);
+
+        [Test]
+        [UiTest]
+        public void Should_Have_OriginalDataContext_When_Required_From_OriginalDataContextElement()
+        {
+            var originalDataContextElement = new System.Windows.Controls.Button
+            {
+                DataContext = "InitialDataContext",
+            };
+            var findToolBarViewModel = new FindToolBarViewModel(_mockFinder.Object, originalDataContextElement);
+            Assert.That(findToolBarViewModel.OriginalDataContext, Is.EqualTo("InitialDataContext"));
+        }
+
+        [Test]
+        [UiTest]
+        public void Should_Notify_When_OriginalDataContext_Changes()
+        {
+            var originalDataContextElement = new System.Windows.Controls.Button
+            {
+                DataContext = "InitialDataContext",
+            };
+            var findToolBarViewModel = new FindToolBarViewModel(_mockFinder.Object, originalDataContextElement);
+
+            object newOriginalDataContext = null;
+            findToolBarViewModel.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == nameof(findToolBarViewModel.OriginalDataContext))
+                {
+                    newOriginalDataContext = findToolBarViewModel.OriginalDataContext;
+                }
+            };
+            originalDataContextElement.DataContext = "NewDataContext";
+            Assert.That(newOriginalDataContext, Is.EqualTo("NewDataContext"));
         }
 
         private void AssertIsSearchUp(bool expectedIsSearchUp)
@@ -107,8 +147,8 @@ namespace UITests
             public CanExecuteHelper(FindToolBarViewModel findToolBarViewModel)
             {
                 _findToolBarViewModel = findToolBarViewModel;
-                findToolBarViewModel.NextCommand.CanExecuteChanged += (_, _) => _nextCanExecuteChanged = true;
-                findToolBarViewModel.PreviousCommand.CanExecuteChanged += (_, _) => _previousCanExecuteChanged = true;
+                findToolBarViewModel.NextCommand.CanExecuteChanged += (_, __) => _nextCanExecuteChanged = true;
+                findToolBarViewModel.PreviousCommand.CanExecuteChanged += (_, __) => _previousCanExecuteChanged = true;
             }
 
             public bool ButtonsCanExecute()

@@ -1,16 +1,19 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using EnhancedFlowDocumentControls.FindToolBarControls;
 using EnhancedFlowDocumentControls.FlowDocumentControls;
 using EnhancedFlowDocumentControls.Management;
 using EnhancedFlowDocumentControls.ViewModel;
 using Moq;
+using NUnit.Framework;
 
-namespace UITests
+namespace Tests
 {
     internal sealed class FindToolBarShowToolbarTests
     {
         [Test]
+        [UiTest]
         public void Should_Set_The_ViewModel_On_IFindToolBarViewModelAware()
         {
             var alertingFindToolBarHost = new AlertingFindToolBarHost();
@@ -42,12 +45,13 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Set_The_DataContext_When_FindToolBar_Is_Not_IFindToolBarViewModelAware()
         {
             var alertingFindToolBarHost = new AlertingFindToolBarHost();
 
-            object originalDataContext = new();
-            EnhancedFlowDocumentReader enhancedFlowDocumentControl = new()
+            object originalDataContext = new object();
+            EnhancedFlowDocumentReader enhancedFlowDocumentControl = new EnhancedFlowDocumentReader()
             {
                 DataContext = originalDataContext,
             };
@@ -79,6 +83,7 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Add_FindToolbar_As_Child_Of_Original_Host()
         {
             var alertingFindToolBarHost = new AlertingFindToolBarHost();
@@ -111,6 +116,7 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Setup_The_Host()
         {
             var mockDocumentViewHelper = new Mock<IDocumentViewHelper>();
@@ -144,11 +150,12 @@ namespace UITests
         }
 
         [Test]
+        [UiTest]
         public void Should_Focus_Find_TextBox_When_FindToolBar_Loaded()
         {
             Action<Action> dispatcher = (_) => { };
             var findToolBar = new FindToolBar();
-            RoutedEventHandler? loadedEventHandler = null;
+            RoutedEventHandler loadedEventHandler = null;
             var mockWpfUtilities = new Mock<IWpfUtilities>();
             _ = mockWpfUtilities.Setup(wpfUtilities => wpfUtilities.AddLoadedEventHandler(findToolBar, It.IsAny<RoutedEventHandler>()))
                 .Callback<FrameworkElement, RoutedEventHandler>((_, handler) => loadedEventHandler = handler);
@@ -178,16 +185,17 @@ namespace UITests
 
             alertingFindToolBarHost.Child = originalFindToolbar;
 
-            loadedEventHandler!(null, null);
+            loadedEventHandler(null, null);
             mockWpfUtilities.Verify(wpfUtilities => wpfUtilities.FocusTextBox(dispatcher));
         }
 
         [Test]
+        [UiTest]
         public void Should_Find_When_Find_TextBox_Return_KeyDown()
         {
             var findToolBar = new FindToolBar();
-            RoutedEventHandler? findToolBarLoadedEventHandler = null;
-            Action? findTextBoxKeyDownEnterOrExecuteHandler = null;
+            RoutedEventHandler findToolBarLoadedEventHandler = null;
+            Action findTextBoxKeyDownEnterOrExecuteHandler = null;
             var mockWpfUtilities = new Mock<IWpfUtilities>();
             _ = mockWpfUtilities.Setup(wpfUtilities => wpfUtilities.AddLoadedEventHandler(findToolBar, It.IsAny<RoutedEventHandler>()))
                 .Callback<FrameworkElement, RoutedEventHandler>((_, handler) => findToolBarLoadedEventHandler = handler);
@@ -220,8 +228,8 @@ namespace UITests
 
             alertingFindToolBarHost.Child = originalFindToolbar;
 
-            findToolBarLoadedEventHandler!(null, null);
-            findTextBoxKeyDownEnterOrExecuteHandler!();
+            findToolBarLoadedEventHandler(null, null);
+            findTextBoxKeyDownEnterOrExecuteHandler();
 
             mockFindableToolBarViewModel.Verify(findableToolBarViewModel => findableToolBarViewModel.Find());
         }
