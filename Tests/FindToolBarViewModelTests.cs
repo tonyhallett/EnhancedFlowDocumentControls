@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using EnhancedFlowDocumentControls.Management;
 using EnhancedFlowDocumentControls.ViewModel;
 using Moq;
@@ -96,7 +97,7 @@ namespace Tests
             => Assert.That(_findToolBarViewModel.OriginalDataContext, Is.Null);
 
         [Test]
-        [UiTest]
+        [RequiresThread(ApartmentState.STA)]
         public void Should_Have_OriginalDataContext_When_Required_From_OriginalDataContextElement()
         {
             var originalDataContextElement = new System.Windows.Controls.Button
@@ -108,7 +109,7 @@ namespace Tests
         }
 
         [Test]
-        [UiTest]
+        [RequiresThread(ApartmentState.STA)]
         public void Should_Notify_When_OriginalDataContext_Changes()
         {
             var originalDataContextElement = new System.Windows.Controls.Button
