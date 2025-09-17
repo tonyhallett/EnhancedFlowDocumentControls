@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using EnhancedFlowDocumentControls.Management;
 using EnhancedFlowDocumentControls.ViewModel;
 using NUnit.Framework;
 

@@ -1,4 +1,4 @@
-﻿namespace EnhancedFlowDocumentControls.Management
+﻿namespace EnhancedFlowDocumentControls.ViewModel
 {
     internal interface IFinder
     {

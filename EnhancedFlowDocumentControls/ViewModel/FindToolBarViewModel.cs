@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using EnhancedFlowDocumentControls.Commands;
-using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
@@ -23,7 +22,7 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private class FindParameterImpl<T> : IFindParameter<T>
+        private sealed class FindParameterImpl<T> : IFindParameter<T>
         {
             private T _originalValue = default;
 
@@ -50,39 +49,41 @@ namespace EnhancedFlowDocumentControls.ViewModel
             }
         }
 
-        private class FindParameters : IFindParameters
+        private sealed class FindParameters : IFindParameters
         {
             public FindParameters(FindToolBarViewModel findToolBarViewModel)
                 => findToolBarViewModel.PropertyChanged += FindToolBarViewModel_PropertyChanged;
 
             private void FindToolBarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
             {
-                if (sender is FindToolBarViewModel findToolBarViewModel)
+                if (!(sender is FindToolBarViewModel findToolBarViewModel))
                 {
-                    switch (e.PropertyName)
-                    {
-                        case nameof(FindToolBarViewModel.FindText):
-                            FindTextImpl.SetValue(findToolBarViewModel.FindText);
-                            break;
-                        case nameof(FindToolBarViewModel.IsSearchUp):
-                            IsSearchUpImpl.SetValue(findToolBarViewModel.IsSearchUp);
-                            break;
-                        case nameof(FindToolBarViewModel.MatchAlefHamza):
-                            MatchAlefHamzaImpl.SetValue(findToolBarViewModel.MatchAlefHamza);
-                            break;
-                        case nameof(FindToolBarViewModel.MatchCase):
-                            MatchCaseImpl.SetValue(findToolBarViewModel.MatchCase);
-                            break;
-                        case nameof(FindToolBarViewModel.MatchDiacritic):
-                            MatchDiacriticImpl.SetValue(findToolBarViewModel.MatchDiacritic);
-                            break;
-                        case nameof(FindToolBarViewModel.MatchKashida):
-                            MatchKashidaImpl.SetValue(findToolBarViewModel.MatchKashida);
-                            break;
-                        case nameof(FindToolBarViewModel.MatchWholeWord):
-                            MatchWholeWordImpl.SetValue(findToolBarViewModel.MatchWholeWord);
-                            break;
-                    }
+                    return;
+                }
+
+                switch (e.PropertyName)
+                {
+                    case nameof(FindToolBarViewModel.FindText):
+                        FindTextImpl.SetValue(findToolBarViewModel.FindText);
+                        break;
+                    case nameof(FindToolBarViewModel.IsSearchUp):
+                        IsSearchUpImpl.SetValue(findToolBarViewModel.IsSearchUp);
+                        break;
+                    case nameof(FindToolBarViewModel.MatchAlefHamza):
+                        MatchAlefHamzaImpl.SetValue(findToolBarViewModel.MatchAlefHamza);
+                        break;
+                    case nameof(FindToolBarViewModel.MatchCase):
+                        MatchCaseImpl.SetValue(findToolBarViewModel.MatchCase);
+                        break;
+                    case nameof(FindToolBarViewModel.MatchDiacritic):
+                        MatchDiacriticImpl.SetValue(findToolBarViewModel.MatchDiacritic);
+                        break;
+                    case nameof(FindToolBarViewModel.MatchKashida):
+                        MatchKashidaImpl.SetValue(findToolBarViewModel.MatchKashida);
+                        break;
+                    case nameof(FindToolBarViewModel.MatchWholeWord):
+                        MatchWholeWordImpl.SetValue(findToolBarViewModel.MatchWholeWord);
+                        break;
                 }
             }
 
