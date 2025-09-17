@@ -281,4 +281,5 @@ Also supports `NavigationCommands.LastPage` and `NavigationCommands.FirstPage`.
 
 ## VerticalScrollbarVisibility
 
-Ronseal.
+When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer is used but there is no means of setting its VerticalScrollBarVisibility.
+The `VerticalScrollBarVisibility` dependency property serves this purpose.
