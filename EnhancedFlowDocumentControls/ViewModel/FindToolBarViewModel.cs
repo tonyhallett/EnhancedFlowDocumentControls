@@ -8,7 +8,7 @@ using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
-    internal sealed class FindToolBarViewModel : INotifyPropertyChanged, IFindParameters, IFindableToolBarViewModel
+    internal sealed class FindToolBarViewModel : INotifyPropertyChanged, IFindableToolBarViewModel
     {
         private readonly IFinder _finder;
         private string _findText;
@@ -22,6 +22,100 @@ namespace EnhancedFlowDocumentControls.ViewModel
         private object _originalDataContext;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private class FindParameterImpl<T> : IFindParameter<T>
+        {
+            private T _originalValue = default;
+
+            public bool Changed { get; private set; }
+
+            public T Value { get; private set; }
+
+            public void Reset()
+            {
+                _originalValue = Value;
+                Changed = false;
+            }
+
+            public void SetValue(T value)
+            {
+                if (EqualityComparer<T>.Default.Equals(_originalValue, value))
+                {
+                    Changed = false;
+                    return;
+                }
+
+                Value = value;
+                Changed = true;
+            }
+        }
+
+        private class FindParameters : IFindParameters
+        {
+            public FindParameters(FindToolBarViewModel findToolBarViewModel)
+                => findToolBarViewModel.PropertyChanged += FindToolBarViewModel_PropertyChanged;
+
+            private void FindToolBarViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if (sender is FindToolBarViewModel findToolBarViewModel)
+                {
+                    switch (e.PropertyName)
+                    {
+                        case nameof(FindToolBarViewModel.FindText):
+                            FindTextImpl.SetValue(findToolBarViewModel.FindText);
+                            break;
+                        case nameof(FindToolBarViewModel.IsSearchUp):
+                            IsSearchUpImpl.SetValue(findToolBarViewModel.IsSearchUp);
+                            break;
+                        case nameof(FindToolBarViewModel.MatchAlefHamza):
+                            MatchAlefHamzaImpl.SetValue(findToolBarViewModel.MatchAlefHamza);
+                            break;
+                        case nameof(FindToolBarViewModel.MatchCase):
+                            MatchCaseImpl.SetValue(findToolBarViewModel.MatchCase);
+                            break;
+                        case nameof(FindToolBarViewModel.MatchDiacritic):
+                            MatchDiacriticImpl.SetValue(findToolBarViewModel.MatchDiacritic);
+                            break;
+                        case nameof(FindToolBarViewModel.MatchKashida):
+                            MatchKashidaImpl.SetValue(findToolBarViewModel.MatchKashida);
+                            break;
+                        case nameof(FindToolBarViewModel.MatchWholeWord):
+                            MatchWholeWordImpl.SetValue(findToolBarViewModel.MatchWholeWord);
+                            break;
+                    }
+                }
+            }
+
+            public FindParameterImpl<string> FindTextImpl { get; } = new FindParameterImpl<string>();
+
+            public FindParameterImpl<bool> IsSearchUpImpl { get; } = new FindParameterImpl<bool>();
+
+            public FindParameterImpl<bool> MatchAlefHamzaImpl { get; set; } = new FindParameterImpl<bool>();
+
+            public FindParameterImpl<bool> MatchCaseImpl { get; set; } = new FindParameterImpl<bool>();
+
+            public FindParameterImpl<bool> MatchDiacriticImpl { get; set; } = new FindParameterImpl<bool>();
+
+            public FindParameterImpl<bool> MatchKashidaImpl { get; set; } = new FindParameterImpl<bool>();
+
+            public FindParameterImpl<bool> MatchWholeWordImpl { get; set; } = new FindParameterImpl<bool>();
+
+            public IFindParameter<string> FindText => FindTextImpl;
+
+            public IFindParameter<bool> IsSearchUp => IsSearchUpImpl;
+
+            public IFindParameter<bool> MatchAlefHamza => MatchAlefHamzaImpl;
+
+            public IFindParameter<bool> MatchCase => MatchCaseImpl;
+
+            public IFindParameter<bool> MatchDiacritic => MatchDiacriticImpl;
+
+            public IFindParameter<bool> MatchKashida => MatchKashidaImpl;
+
+            public IFindParameter<bool> MatchWholeWord => MatchWholeWordImpl;
+        }
+
+        private readonly FindParameters _findParameters;
 
         public object OriginalDataContext
         {
@@ -40,6 +134,7 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
         internal FindToolBarViewModel(IFinder finder, FrameworkElement originalDataContextElement)
         {
+            _findParameters = new FindParameters(this);
             _finder = finder;
             NextCommand = new RelayCommand(FindNext, CanFind);
             PreviousCommand = new RelayCommand(FindPrevious, CanFind);
@@ -160,7 +255,7 @@ namespace EnhancedFlowDocumentControls.ViewModel
             Find();
         }
 
-        public void Find() => _finder.Find(this);
+        public void Find() => _finder.Find(_findParameters);
 
         #region INotifyPropertyChanged
         private void SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = "")

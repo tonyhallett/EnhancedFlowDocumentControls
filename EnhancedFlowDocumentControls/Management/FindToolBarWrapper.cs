@@ -68,14 +68,25 @@ namespace EnhancedFlowDocumentControls.Management
 
         public void Find(IFindParameters findParameters)
         {
-            SetFindText(findParameters.FindText);
-            SetSearchUp(findParameters.IsSearchUp);
-            SelectMatchWholeWord(findParameters.MatchWholeWord);
-            SelectMatchCase(findParameters.MatchCase);
-            SelectMatchDiacritic(findParameters.MatchDiacritic);
-            SelectMatchKashida(findParameters.MatchKashida);
-            SelectMatchAlefHamza(findParameters.MatchAlefHamza);
+            SetIfChanged(findParameters.FindText, SetFindText);
+            SetIfChanged(findParameters.IsSearchUp, SetSearchUp);
+            SetIfChanged(findParameters.MatchWholeWord, SelectMatchWholeWord);
+            SetIfChanged(findParameters.MatchCase, SelectMatchCase);
+            SetIfChanged(findParameters.MatchDiacritic, SelectMatchDiacritic);
+            SetIfChanged(findParameters.MatchKashida, SelectMatchKashida);
+            SetIfChanged(findParameters.MatchAlefHamza, SelectMatchAlefHamza);
             _ = s_reflectionMembers.OnFindClick.Invoke(_findToolbar, null);
+        }
+
+        private static void SetIfChanged<T>(IFindParameter<T> findParameter, Action<T> setter)
+        {
+            if (!findParameter.Changed)
+            {
+                return;
+            }
+
+            setter(findParameter.Value);
+            findParameter.Reset();
         }
 
         private bool SelectOption(FieldInfo menuField, bool isChecked)

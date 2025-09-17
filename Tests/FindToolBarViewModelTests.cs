@@ -2,21 +2,28 @@
 using System.Threading;
 using EnhancedFlowDocumentControls.Management;
 using EnhancedFlowDocumentControls.ViewModel;
-using Moq;
 using NUnit.Framework;
 
 namespace Tests
 {
     internal sealed class FindToolBarViewModelTests
     {
-        private Mock<IFinder> _mockFinder;
         private FindToolBarViewModel _findToolBarViewModel;
+
+        private class DummyFinder : IFinder
+        {
+            public IFindParameters FindParameters { get; private set; }
+
+            public void Find(IFindParameters findParameters) => FindParameters = findParameters;
+        }
+
+        private DummyFinder _dummyFinder;
 
         [SetUp]
         public void Setup()
         {
-            _mockFinder = new Mock<IFinder>();
-            _findToolBarViewModel = new FindToolBarViewModel(_mockFinder.Object, null);
+            _dummyFinder = new DummyFinder();
+            _findToolBarViewModel = new FindToolBarViewModel(_dummyFinder, null);
         }
 
         [Test]
@@ -47,15 +54,17 @@ namespace Tests
         }
 
         [Test]
-        public void Should_Be_Search_Down_Initially() => AssertIsSearchUp(false);
+        public void Should_Be_Search_Down_Initially() => AssertFindToolBarViewModelIsSearchUp(false);
 
         [Test]
         public void Should_Find_Search_Up_From_Button()
         {
-            _findToolBarViewModel.FindText = "abc";
+            _findToolBarViewModel.AllowSearchingWhenEmptyText = true;
             _findToolBarViewModel.PreviousCommand.Execute(null);
-            AssertIsSearchUp(true);
-            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
+
+            AssertFindToolBarViewModelIsSearchUp(true);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Value, Is.True);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Changed, Is.True);
         }
 
         [Test]
@@ -63,33 +72,112 @@ namespace Tests
         {
             _findToolBarViewModel.FindText = "abc";
             _findToolBarViewModel.NextCommand.Execute(null);
-            AssertIsSearchUp(false);
-            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
+
+            AssertFindToolBarViewModelIsSearchUp(false);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Value, Is.False);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Changed, Is.False);
         }
 
         [Test]
         public void Should_Find_With_SearchUp_True()
         {
             _findToolBarViewModel.Find(true);
-            AssertIsSearchUp(true);
-            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
+
+            AssertFindToolBarViewModelIsSearchUp(true);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Value, Is.True);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Changed, Is.True);
         }
 
         [Test]
         public void Should_Find_With_SearchUp_False()
         {
             _findToolBarViewModel.Find(false);
-            AssertIsSearchUp(false);
-            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel));
+
+            AssertFindToolBarViewModelIsSearchUp(false);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Value, Is.False);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Changed, Is.False);
         }
 
         [TestCase(true)]
+        [TestCase(false)]
         public void Should_Search_With_Current_Search_Direction_When_Find(bool currentIsSearchUp)
         {
             _findToolBarViewModel.Find(currentIsSearchUp);
+            _dummyFinder.FindParameters.IsSearchUp.Reset();
+
             _findToolBarViewModel.Find();
-            AssertIsSearchUp(currentIsSearchUp);
-            _mockFinder.Verify(finder => finder.Find(_findToolBarViewModel), Times.Exactly(2));
+
+            AssertFindToolBarViewModelIsSearchUp(currentIsSearchUp);
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Value, Is.EqualTo(currentIsSearchUp));
+            Assert.That(_dummyFinder.FindParameters.IsSearchUp.Changed, Is.False);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_FindText_FindParameter(bool setFindText)
+        {
+            if (setFindText)
+            {
+                _findToolBarViewModel.FindText = "abc";
+            }
+
+            _findToolBarViewModel.Find();
+            Assert.That(_dummyFinder.FindParameters.FindText.Value, Is.EqualTo(_findToolBarViewModel.FindText));
+            Assert.That(_dummyFinder.FindParameters.FindText.Changed, Is.EqualTo(setFindText));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_MatchAlefHamza_FindParameter(bool selectMatchAlefHamza)
+            => MenuItemTest(selectMatchAlefHamza, () => _dummyFinder.FindParameters.MatchAlefHamza, () => _findToolBarViewModel.MatchAlefHamza = true);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_MatchCase_FindParameter(bool selectMatchCase)
+            => MenuItemTest(selectMatchCase, () => _dummyFinder.FindParameters.MatchCase, () => _findToolBarViewModel.MatchCase = true);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_MatchDiacritic_FindParameter(bool selectMatchDiacritic)
+            => MenuItemTest(selectMatchDiacritic, () => _dummyFinder.FindParameters.MatchDiacritic, () => _findToolBarViewModel.MatchDiacritic = true);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_MatchKashida_FindParameter(bool selectMatchKashida)
+            => MenuItemTest(selectMatchKashida, () => _dummyFinder.FindParameters.MatchKashida, () => _findToolBarViewModel.MatchKashida = true);
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Should_Have_Expected_MatchWholeWord_FindParameter(bool selectMatchWholeWord)
+            => MenuItemTest(selectMatchWholeWord, () => _dummyFinder.FindParameters.MatchWholeWord, () => _findToolBarViewModel.MatchWholeWord = true);
+
+        private void MenuItemTest(bool selectMenuItem, Func<IFindParameter<bool>> getFindParameter, Action setFindToolBarMenuItem)
+        {
+            if (selectMenuItem)
+            {
+                setFindToolBarMenuItem();
+            }
+
+            _findToolBarViewModel.Find();
+
+            IFindParameter<bool> findParameter = getFindParameter();
+            Assert.That(findParameter.Value, Is.EqualTo(selectMenuItem));
+            Assert.That(findParameter.Changed, Is.EqualTo(selectMenuItem));
+        }
+
+        [Test]
+        public void Should_Not_Have_Find_Parameter_Changed_If_Original()
+        {
+            _findToolBarViewModel.FindText = "abc";
+            _findToolBarViewModel.Find();
+
+            _dummyFinder.FindParameters.FindText.Reset();
+
+            _findToolBarViewModel.FindText = "ab";
+            _findToolBarViewModel.FindText = "abc";
+
+            _findToolBarViewModel.Find();
+            Assert.That(_dummyFinder.FindParameters.FindText.Changed, Is.False);
         }
 
         [Test]
@@ -104,7 +192,7 @@ namespace Tests
             {
                 DataContext = "InitialDataContext",
             };
-            var findToolBarViewModel = new FindToolBarViewModel(_mockFinder.Object, originalDataContextElement);
+            var findToolBarViewModel = new FindToolBarViewModel(null, originalDataContextElement);
             Assert.That(findToolBarViewModel.OriginalDataContext, Is.EqualTo("InitialDataContext"));
         }
 
@@ -116,7 +204,7 @@ namespace Tests
             {
                 DataContext = "InitialDataContext",
             };
-            var findToolBarViewModel = new FindToolBarViewModel(_mockFinder.Object, originalDataContextElement);
+            var findToolBarViewModel = new FindToolBarViewModel(null, originalDataContextElement);
 
             object newOriginalDataContext = null;
             findToolBarViewModel.PropertyChanged += (s, args) =>
@@ -132,7 +220,7 @@ namespace Tests
             Assert.That(newOriginalDataContext, Is.EqualTo("NewDataContext"));
         }
 
-        private void AssertIsSearchUp(bool expectedIsSearchUp)
+        private void AssertFindToolBarViewModelIsSearchUp(bool expectedIsSearchUp)
             => Assert.Multiple(() =>
             {
                 Assert.That(_findToolBarViewModel.IsSearchUp, Is.EqualTo(expectedIsSearchUp));

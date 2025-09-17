@@ -2,18 +2,18 @@
 {
     internal interface IFindParameters
     {
-        string FindText { get; set; }
+        IFindParameter<string> FindText { get; }
 
-        bool IsSearchUp { get; }
+        IFindParameter<bool> IsSearchUp { get; }
 
-        bool MatchAlefHamza { get; set; }
+        IFindParameter<bool> MatchAlefHamza { get; }
 
-        bool MatchCase { get; set; }
+        IFindParameter<bool> MatchCase { get; }
 
-        bool MatchDiacritic { get; set; }
+        IFindParameter<bool> MatchDiacritic { get; }
 
-        bool MatchKashida { get; set; }
+        IFindParameter<bool> MatchKashida { get; }
 
-        bool MatchWholeWord { get; set; }
+        IFindParameter<bool> MatchWholeWord { get; }
     }
 }
