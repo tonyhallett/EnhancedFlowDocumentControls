@@ -15,7 +15,7 @@ namespace Tests.FindToolBarManagerTests
             _ = MockFindToolBarViewModelFactory.Setup(findToolBarViewModelFactory
                 => findToolBarViewModelFactory.Create(OriginalFindToolbar, null)).Returns(FindableToolBarViewModel);
 
-            ShowToolBar(FindToolBarViewModelAware);
+            SetupAndShowToolBar(FindToolBarViewModelAware);
 
             Assert.That(FindToolBarViewModelAware.FindToolBarViewModel, Is.SameAs(FindableToolBarViewModel));
         }
@@ -27,7 +27,7 @@ namespace Tests.FindToolBarManagerTests
                 => findToolBarViewModelFactory.Create(OriginalFindToolbar, EnhancedFlowDocumentControl)).Returns(FindableToolBarViewModel);
 
             var findToolBarNotAware = new ToolBar();
-            ShowToolBar(findToolBarNotAware);
+            SetupAndShowToolBar(findToolBarNotAware);
 
             Assert.That(findToolBarNotAware.DataContext, Is.SameAs(FindableToolBarViewModel));
         }
@@ -37,7 +37,7 @@ namespace Tests.FindToolBarManagerTests
         {
             _ = MockFindToolBarViewModelFactory.Setup(findToolBarViewModelFactory => findToolBarViewModelFactory.Create(OriginalFindToolbar, null)).Returns(FindableToolBarViewModel);
 
-            ShowToolBar();
+            SetupAndShowToolBar();
 
             Assert.That(OriginalHost.Child, Is.SameAs(FindToolBarViewModelAware));
         }
@@ -47,7 +47,7 @@ namespace Tests.FindToolBarManagerTests
         {
             _ = MockFindToolBarViewModelFactory.Setup(findToolBarViewModelFactory => findToolBarViewModelFactory.Create(OriginalFindToolbar, null)).Returns(FindableToolBarViewModel);
 
-            ShowToolBar();
+            SetupAndShowToolBar();
 
             MockDocumentViewHelper.Verify(documentViewHelper => documentViewHelper.ToggleFindToolBarHost(OriginalHost, true));
         }
@@ -67,7 +67,7 @@ namespace Tests.FindToolBarManagerTests
                 DummyWpfUtilities,
                 dispatcher);
 
-            ShowToolBar(null, new FindToolBarManagerAndAlertingHost(findToolbarManager, alertingFindToolBarHost));
+            SetupAndShowToolBar(null, new FindToolBarManagerAndAlertingHost(findToolbarManager, alertingFindToolBarHost));
 
             DummyWpfUtilities.InvokeLoaded();
 
@@ -81,7 +81,7 @@ namespace Tests.FindToolBarManagerTests
                 => findToolBarViewModelFactory.Create(OriginalFindToolbar, null))
                 .Returns(MockFindableToolBarViewModel.Object);
 
-            ShowToolBar();
+            SetupAndShowToolBar();
 
             DummyWpfUtilities.InvokeLoaded();
             DummyWpfUtilities.InvokeEnterOrExecute();

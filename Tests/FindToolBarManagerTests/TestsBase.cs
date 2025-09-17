@@ -70,7 +70,7 @@ namespace Tests.FindToolBarManagerTests
                 null);
         }
 
-        protected void ShowToolBar(FrameworkElement customFindToolBar = null, FindToolBarManagerAndAlertingHost showToolbarParameters = null)
+        protected void SetupAndShowToolBar(FrameworkElement customFindToolBar = null, FindToolBarManagerAndAlertingHost showToolbarParameters = null)
         {
             customFindToolBar = customFindToolBar ?? FindToolBarViewModelAware;
             DummyWpfUtilities.ExpectedCustomFindToolBar = customFindToolBar;

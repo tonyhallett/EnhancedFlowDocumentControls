@@ -7,7 +7,7 @@ namespace Tests.FindToolBarManagerTests
         [SetUp]
         public void SetUp()
         {
-            ShowToolBar();
+            SetupAndShowToolBar();
             AlertingFindToolBarHost.Child = null;
         }
 

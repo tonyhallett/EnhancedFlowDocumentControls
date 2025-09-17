@@ -26,7 +26,7 @@ namespace Tests.FindToolBarManagerTests
         [Test]
         public void Should_Not_Find_When_Showing_But_Not_F3()
         {
-            ShowToolBar();
+            SetupAndShowToolBar();
             DoesNotFindTest(Key.N);
         }
 
@@ -50,7 +50,7 @@ namespace Tests.FindToolBarManagerTests
 
         private void DoesFindTest(bool isShift)
         {
-            ShowToolBar();
+            SetupAndShowToolBar();
 
             KeyEventArgs keyEventArgs = KeyEventArgsCreator.Create(Key.F3, isShift ? ModifierKeys.Shift : ModifierKeys.None);
             FindToolBarManager.KeyDown(keyEventArgs, _ => Assert.Fail());
