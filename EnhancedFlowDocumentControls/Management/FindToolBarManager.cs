@@ -21,6 +21,8 @@ namespace EnhancedFlowDocumentControls.Management
         private Decorator _originalFindToolBarHost;
         private IEnhancedFlowDocumentControl _flowControl;
         private IFindableToolBarViewModel _findToolBarViewModel;
+        private bool _retainSettings;
+        private IFindToolBarSettings _retainedSettings;
 
         internal FindToolBarManager(Action<Action> dispatcher = null)
             : this(
@@ -52,6 +54,21 @@ namespace EnhancedFlowDocumentControls.Management
             alertingFindToolBarHost.CloseToolBarEvent += AlertingFindToolBarHost_CloseToolBarEvent;
         }
 
+        public bool RetainSettings
+        {
+            get => _retainSettings;
+            set
+            {
+                _retainSettings = value;
+                if (_retainSettings)
+                {
+                    return;
+                }
+
+                _retainedSettings = null;
+            }
+        }
+
         private bool IsShowingFindToolbar => _originalFindToolBarHost.Child != null;
 
         internal void Setup(IEnhancedFlowDocumentControl flowControl, FrameworkElement customFindToolBar)
@@ -70,7 +87,13 @@ namespace EnhancedFlowDocumentControls.Management
 
         private void AlertingFindToolBarHost_CloseToolBarEvent(object sender, EventArgs e)
         {
+            if (RetainSettings)
+            {
+                _retainedSettings = FindToolBarSettings.Clone(_findToolBarViewModel);
+            }
+
             _findToolBarViewModel = null;
+
             _originalFindToolBarHost.Child = null;
             _wpfUtilities.Clear();
             _documentViewerHelper.ToggleFindToolBarHost(_originalFindToolBarHost, false);
@@ -80,6 +103,11 @@ namespace EnhancedFlowDocumentControls.Management
         {
             FrameworkElement originalDataContextElement = _customFindToolBar is IFindToolBarViewModelAware ? null : _flowControl as FrameworkElement;
             _findToolBarViewModel = _findToolBarViewModelFactory.Create(findToolBar, originalDataContextElement);
+            if (_retainedSettings != null)
+            {
+                _findToolBarViewModel.ApplySettings(_retainedSettings);
+            }
+
             AddCustomFindToolBarToHost();
             _documentViewerHelper.ToggleFindToolBarHost(_originalFindToolBarHost, true);
             _wpfUtilities.AddLoadedEventHandler(_customFindToolBar, (_, __) => ReadyTextBox());

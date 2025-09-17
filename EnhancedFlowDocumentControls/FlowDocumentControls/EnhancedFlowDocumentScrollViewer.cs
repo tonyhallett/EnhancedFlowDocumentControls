@@ -34,6 +34,28 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
             set => SetValue(FindToolBarProperty, value);
         }
 
+        #region RetainFindToolBarSettings
+        public bool RetainFindToolBarSettings
+        {
+            get => (bool)GetValue(RetainFindToolBarSettingsProperty);
+            set => SetValue(RetainFindToolBarSettingsProperty, value);
+        }
+
+        public static readonly DependencyProperty RetainFindToolBarSettingsProperty =
+            DependencyProperty.Register(nameof(RetainFindToolBarSettings), typeof(bool), typeof(EnhancedFlowDocumentScrollViewer), new PropertyMetadata(false, RetainFindToolBarSettingsChanged));
+
+        private static void RetainFindToolBarSettingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is EnhancedFlowDocumentScrollViewer viewer))
+            {
+                return;
+            }
+
+            viewer._findToolBarManager.RetainSettings = (bool)e.NewValue;
+        }
+
+        #endregion
+
         static EnhancedFlowDocumentScrollViewer() => EventManager.RegisterClassHandler(
                 typeof(EnhancedFlowDocumentScrollViewer),
                 Keyboard.KeyDownEvent,

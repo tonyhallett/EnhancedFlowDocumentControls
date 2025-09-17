@@ -272,6 +272,17 @@ namespace EnhancedFlowDocumentControls.ViewModel
 
         private void OnPropertyChanged(string name)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
         #endregion
+        public void ApplySettings(IFindToolBarSettings retainedSettings)
+        {
+            FindText = retainedSettings.FindText;
+            IsSearchUp = retainedSettings.IsSearchUp;
+            MatchWholeWord = retainedSettings.MatchWholeWord;
+            MatchCase = retainedSettings.MatchCase;
+            MatchDiacritic = retainedSettings.MatchDiacritic;
+            MatchKashida = retainedSettings.MatchKashida;
+            MatchAlefHamza = retainedSettings.MatchAlefHamza;
+        }
     }
 }

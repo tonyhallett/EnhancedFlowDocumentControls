@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using EnhancedFlowDocumentControls.KeyCommands;
@@ -36,6 +37,28 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
             get => (FrameworkElement)GetValue(FindToolBarProperty);
             set => SetValue(FindToolBarProperty, value);
         }
+
+        #region RetainFindToolBarSettings
+        public bool RetainFindToolBarSettings
+        {
+            get => (bool)GetValue(RetainFindToolBarSettingsProperty);
+            set => SetValue(RetainFindToolBarSettingsProperty, value);
+        }
+
+        public static readonly DependencyProperty RetainFindToolBarSettingsProperty =
+            DependencyProperty.Register(nameof(RetainFindToolBarSettings), typeof(bool), typeof(EnhancedFlowDocumentReader), new PropertyMetadata(false, RetainFindToolBarSettingsChanged));
+
+        private static void RetainFindToolBarSettingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is EnhancedFlowDocumentReader reader))
+            {
+                return;
+            }
+
+            reader._findToolBarManager.RetainSettings = (bool)e.NewValue;
+        }
+
+        #endregion
 
         #region VerticalScrollbarVisibility
 

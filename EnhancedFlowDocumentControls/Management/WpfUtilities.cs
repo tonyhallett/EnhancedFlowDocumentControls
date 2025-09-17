@@ -34,6 +34,12 @@ namespace EnhancedFlowDocumentControls.Management
             => DoDispatch(
                 () =>
                 {
+                    // due to fast toggling of the find toolbar, the textbox may not be there
+                    if (_findTextBox == null)
+                    {
+                        return;
+                    }
+
                     _ = _findTextBox.Focus();
                     _ = Keyboard.Focus(_findTextBox);
                 },
@@ -60,7 +66,7 @@ namespace EnhancedFlowDocumentControls.Management
 
         public void Clear()
         {
-            _findTextBox.KeyDown -= _previewKeyDownHandler;
+            _findTextBox.PreviewKeyDown -= _previewKeyDownHandler;
             _previewKeyDownHandler = null;
             _findTextBox = null;
 
