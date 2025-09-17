@@ -248,6 +248,11 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
 ![Enhanced](videos/EnhancedFlowDocumentReaderVideo.gif)
 ![Normal](videos/NormalFlowDocumentReaderVideo.gif)
 
+## RetainFindToolBarSettings dependency property
+
+The behaviour of the internal find tool bar is to reset the search options when the FindToolBar is closed and reopened.
+Setting the RetainFindToolBarSettings property to true will retain the settings in the IFindToolBarViewModel.
+
 ## EnhancedFlowDocumentReader additional
 
 ### Key bindings
