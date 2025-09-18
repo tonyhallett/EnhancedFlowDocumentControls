@@ -255,31 +255,25 @@ Setting the RetainFindToolBarSettings property to true will retain the settings 
 
 ## EnhancedFlowDocumentReader additional
 
-### Key bindings
+## VerticalScrollbarVisibility
 
-Note that there are some keys that are processed by the FlowDocumentReader
+When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer is used but there is no means of setting its VerticalScrollBarVisibility.
+The `VerticalScrollBarVisibility` dependency property serves this purpose.
 
-Ctrl~M for cycling between the modes.
-
-Ctrl~ + and - for zooming in and out.
+## Notes on key behaviour
 
 F3 for showing the find toolbar. Once shown will search. Shift key to search backwards.
 
 Enter key when text box has focus will search with current search direction.
 
-This fills the gap - specify a KeyBinding in the XAML - e.g
+Key bindings
+|Command                       |FlowDocumentReader|FlowDocumentScrollViewer   |FlowDocumentPageViewer|
+| -----------------------------|------------------|---------------------------|----------------------|
+|Switch viewing modes          |Ctrl+M            |                           |No                    |
+| Print / Cancel print         |Ctrl+P            |Ctrl+P                     |Ctrl+P                |
+|Previous/Next/First/Last Page |No key            |Key.Prior, Next, Home, End |Left, Up, Prior \| Right, Down, Next \| Home, Ctrl+Home \| Ctrl+End, End|
+|Zoom In/Out                   |Ctrl +, Ctrl -    |Ctrl +, Ctrl -             |Ctrl +, Ctrl -        |
+| Line Down/Up/Left/Right      |                  | Down, Up, Left, Right     |                      |
 
-```xaml
-<EnhancedFlowDocumentReader.InputBindings>
-    <KeyBinding Command="ApplicationCommands.Find" Modifiers="Ctrl" Key="F" />
-    <KeyBinding Command="NavigationCommands.NextPage" Modifiers="Ctrl" Key="N" />
-    <KeyBinding Command="NavigationCommands.PreviousPage" Modifiers="Ctrl" Key="P" />
-</EnhancedFlowDocumentReader.InputBindings>
-```
-
-Also supports `NavigationCommands.LastPage` and `NavigationCommands.FirstPage`.
-
-## VerticalScrollbarVisibility
-
-When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer is used but there is no means of setting its VerticalScrollBarVisibility.
-The `VerticalScrollBarVisibility` dependency property serves this purpose.
+Important to note that if the FlowDocumentReader has focus the page keys will not work !.
+If desired you can add them to the FlowDocumentReader InputBindings.

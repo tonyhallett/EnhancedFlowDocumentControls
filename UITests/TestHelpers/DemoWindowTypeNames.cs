@@ -4,7 +4,6 @@
     {
         public const string EnhancedFlowDocumentReader = nameof(Demo.EnhancedFlowDocumentReaderWindow);
         public const string OriginalDataContext = nameof(Demo.OriginalDataContextWindow);
-        public const string InputBindings = nameof(Demo.InputBindingsWindow);
         public const string FindToolbarViewModelAwareDataContext = nameof(Demo.FindToolbarViewModelAwarePreserveDataContextWindow);
         public const string FindToolBarViewModelAwareAllowSearchingWhenEmptyText = nameof(Demo.IFindToolBarViewModelAwareAllowSearchingWhenEmptyTextWindow);
         public const string FindingTextBoxStackPanelChild = nameof(Demo.FindingTextBoxStackPanelChildWindow);

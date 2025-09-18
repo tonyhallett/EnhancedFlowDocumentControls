@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using EnhancedFlowDocumentControls.KeyCommands;
 using EnhancedFlowDocumentControls.Management;
 
 namespace EnhancedFlowDocumentControls.FlowDocumentControls
@@ -11,7 +9,6 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
     {
         private readonly FindToolBarManager _findToolBarManager = new FindToolBarManager();
         private Decorator _contentHost;
-        private KeyCommandHandler _keyHandler;
 
         FindToolBarManager IEnhancedFlowDocumentControl.FindToolBarManager => _findToolBarManager;
 
@@ -114,16 +111,6 @@ namespace EnhancedFlowDocumentControls.FlowDocumentControls
                 Keyboard.KeyDownEvent,
                 new KeyEventHandler(FindToolBarManager.KeyDownHandler),
                 true);
-
-        public EnhancedFlowDocumentReader()
-        {
-            Loaded += (sender, e) => _keyHandler = new KeyCommandHandler(this);
-            Unloaded += (sender, e) =>
-            {
-                _keyHandler?.Detach();
-                _keyHandler = null;
-            };
-        }
 
         public override void OnApplyTemplate()
         {
