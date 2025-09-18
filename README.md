@@ -257,7 +257,8 @@ Setting the RetainFindToolBarSettings property to true will retain the settings 
 
 ## VerticalScrollbarVisibility
 
-When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer is used but there is no means of setting its VerticalScrollBarVisibility.
+When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer derivation is used but its Style property is explicitly set.
+and there is no means of setting its VerticalScrollBarVisibility.
 The `VerticalScrollBarVisibility` dependency property serves this purpose.
 
 ## Notes on key behaviour

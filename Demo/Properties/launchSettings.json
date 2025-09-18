@@ -2,7 +2,7 @@
   "profiles": {
     "Demo": {
       "commandName": "Project",
-      "commandLineArgs": "EnhancedFlowDocumentReaderWindow"
+      "commandLineArgs": "VerticalScrollbarFlowDocumentReaderWindow"
     }
   }
 }
