@@ -2,7 +2,7 @@
   "profiles": {
     "Demo": {
       "commandName": "Project",
-      "commandLineArgs": "NormalFlowDocumentReaderWindow"
+      "commandLineArgs": "EnhancedFlowDocumentReaderWindow"
     }
   }
 }
