@@ -39,7 +39,8 @@ namespace Tests
         {
             _wpfUtilities.AddPreviewKeyDownEnterOrExecuteHandler(null);
             bool dispatcherInvoked = false;
-            _wpfUtilities.FocusTextBox((action) => {
+            _wpfUtilities.FocusTextBox((action) =>
+            {
                 dispatcherInvoked = true;
                 action();
             });

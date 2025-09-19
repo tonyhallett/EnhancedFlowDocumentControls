@@ -14,7 +14,9 @@
                 IsSearchUp = findToolBarSettings.IsSearchUp,
             };
 
-        private FindToolBarSettings() { }
+        private FindToolBarSettings()
+        {
+        }
 
         public string FindText { get; set; }
 

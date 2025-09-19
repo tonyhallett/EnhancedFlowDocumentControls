@@ -75,25 +75,8 @@ namespace VideoRecorder
 
             s_videoRecorder = new FlauVideoRecorder(
                 videoRecorderSettings,
-                (_) =>
-                {
-                    CaptureImage captureImage = Capture.Rectangle(
-                        AddSpaceForMenu(s_window!.BoundingRectangle),
-                        captureSettings);
-                    var mouseOverlay = new MouseOverlay(captureImage);
-                    return captureImage.ApplyOverlays(mouseOverlay);
-                });
+                (_) => Capture.Rectangle(s_window!.InflatedBounds(200), captureSettings).WithMouseOverlay());
             return videoRecorderSettings.TargetVideoPath;
-        }
-
-        private static System.Drawing.Rectangle AddSpaceForMenu(System.Drawing.Rectangle windowBounds)
-        {
-            const int space = 200;
-            return new System.Drawing.Rectangle(
-                windowBounds.X - space,
-                windowBounds.Y - space,
-                windowBounds.Width + (2 * space),
-                windowBounds.Height + (2 * space));
         }
     }
 }

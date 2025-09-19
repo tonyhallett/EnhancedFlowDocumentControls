@@ -2,7 +2,6 @@
 
 namespace EnhancedFlowDocumentControls.ViewModel
 {
-
     public interface IFindToolBarViewModel : IFindToolBarSettings
     {
         bool AllowSearchingWhenEmptyText { get; set; }
