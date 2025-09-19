@@ -515,10 +515,10 @@
               Foreground="{TemplateBinding Foreground}"
               AllowDrop="True"
               BorderThickness="0"
+              MaxLength="255"
               SelectionBrush="{TemplateBinding SelectionBrush}"
               SelectionOpacity="{TemplateBinding SelectionOpacity}"
               Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type viewModel:IFindToolBarViewModelAware}}, Path=FindToolBarViewModel.FindText, UpdateSourceTrigger=PropertyChanged}"
-              MaxLength="255"
               ToolTip="{TemplateBinding Tooltip}"
               ToolTipService.IsEnabled="{TemplateBinding ShowTooltip}"
               ToolTipService.ShowOnDisabled="true" />

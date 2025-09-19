@@ -28,13 +28,14 @@
         </FlowDocument>
       </flowControls:EnhancedFlowDocumentReader.Document>
       <flowControls:EnhancedFlowDocumentReader.FindToolBar>
-        <findControls:FindToolBar>
+        <findControls:FindToolBar
+          Background="{Binding Background}">
           <Border
-            Margin="5,1,0,1"
+            Margin="5,0,5,0"
             Padding="0"
             Background="{Binding Background}"
             BorderBrush="{Binding Border}"
-            BorderThickness="1"
+            BorderThickness="0"
             SnapsToDevicePixels="true">
             <StackPanel
               Orientation="Horizontal">

@@ -173,6 +173,7 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
 ```xaml
 <demoCommon:DemoWindow
   x:Class="Demo.EnhancedFlowDocumentReaderVideoWindow"
+  x:ClassModifier="internal"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -189,8 +190,7 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
     <flowControls:EnhancedFlowDocumentReader
       BorderBrush="{Binding MainForeground}"
       BorderThickness="1"
-      SelectionBrush="{Binding MainForeground}"
-        >
+      SelectionBrush="{Binding MainForeground}">
       <flowControls:EnhancedFlowDocumentReader.Document>
         <FlowDocument
           FontFamily="{StaticResource fontFamily}">
@@ -200,14 +200,15 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
           </Paragraph>
         </FlowDocument>
       </flowControls:EnhancedFlowDocumentReader.Document>
-      <flowControls:EnhancedFlowDocumentReader.FindToolbar>
-        <findControls:FindToolBar>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+        <findControls:FindToolBar
+          Background="{Binding Background}">
           <Border
-            Margin="5,1,0,1"
+            Margin="5,0,5,0"
             Padding="0"
             Background="{Binding Background}"
             BorderBrush="{Binding Border}"
-            BorderThickness="1"
+            BorderThickness="0"
             SnapsToDevicePixels="true">
             <StackPanel
               Orientation="Horizontal">
@@ -237,16 +238,27 @@ EnhancedFlowDocumentReaderVideoWindow.xaml
             </StackPanel>
           </Border>
         </findControls:FindToolBar>
-      </flowControls:EnhancedFlowDocumentReader.FindToolbar>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
     </flowControls:EnhancedFlowDocumentReader>
   </DockPanel>
 </demoCommon:DemoWindow>
-
-
 ```
 
 ![Enhanced](videos/EnhancedFlowDocumentReaderVideo.gif)
 ![Normal](videos/NormalFlowDocumentReaderVideo.gif)
+
+By supplying your own FindToolBar you can also avoid the overhang issue.
+
+![overhang issue.](ReadmeImages/Overhang.png)
+
+Achieved with a larger margin right than the internal 1 on the containing Border.
+
+```xaml
+        <findControls:FindToolBar
+          Background="{Binding Background}">
+          <Border
+            Margin="5,0,5,0"
+```
 
 ## RetainFindToolBarSettings dependency property
 
@@ -257,7 +269,7 @@ Setting the RetainFindToolBarSettings property to true will retain the settings 
 
 ## VerticalScrollbarVisibility
 
-When the `ViewingMode` is  `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer derivation is used but its Style property is explicitly set.
+When the `ViewingMode` is `FlowDocumentReaderViewingMode.Scroll` a FlowDocumentScrollViewer derivation is used but its Style property is explicitly set.
 and there is no means of setting its VerticalScrollBarVisibility.
 The `VerticalScrollBarVisibility` dependency property serves this purpose.
 
@@ -268,13 +280,13 @@ F3 for showing the find toolbar. Once shown will search. Shift key to search bac
 Enter key when text box has focus will search with current search direction.
 
 Key bindings
-|Command                       |FlowDocumentReader|FlowDocumentScrollViewer   |FlowDocumentPageViewer|
+|Command |FlowDocumentReader|FlowDocumentScrollViewer |FlowDocumentPageViewer|
 | -----------------------------|------------------|---------------------------|----------------------|
-|Switch viewing modes          |Ctrl+M            |                           |No                    |
-| Print / Cancel print         |Ctrl+P            |Ctrl+P                     |Ctrl+P                |
-|Previous/Next/First/Last Page |No key            |Key.Prior, Next, Home, End |Left, Up, Prior \| Right, Down, Next \| Home, Ctrl+Home \| Ctrl+End, End|
-|Zoom In/Out                   |Ctrl +, Ctrl -    |Ctrl +, Ctrl -             |Ctrl +, Ctrl -        |
-| Line Down/Up/Left/Right      |                  | Down, Up, Left, Right     |                      |
+|Switch viewing modes |Ctrl+M | |No |
+| Print / Cancel print |Ctrl+P |Ctrl+P |Ctrl+P |
+|Previous/Next/First/Last Page |No key |Key.Prior, Next, Home, End |Left, Up, Prior \| Right, Down, Next \| Home, Ctrl+Home \| Ctrl+End, End|
+|Zoom In/Out |Ctrl +, Ctrl - |Ctrl +, Ctrl - |Ctrl +, Ctrl - |
+| Line Down/Up/Left/Right | | Down, Up, Left, Right | |
 
 Important to note that if the FlowDocumentReader has focus the page keys will not work !.
 If desired you can add them to the FlowDocumentReader InputBindings.
