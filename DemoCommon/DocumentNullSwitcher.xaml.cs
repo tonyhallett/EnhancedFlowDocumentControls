@@ -12,7 +12,7 @@ namespace DemoCommon
     {
         public DocumentNullSwitcher() => InitializeComponent();
 
-        private class FlowControlDocument
+        private sealed class FlowControlDocument
         {
             public Func<FlowDocument> GetDocument { get; }
 

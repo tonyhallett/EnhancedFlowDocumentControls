@@ -23,17 +23,17 @@ namespace UITests.Tests
             {
                 base.UITestBaseTearDown();
             }
-            catch (FileNotFoundException fileNotFoundException)
+            catch (FileNotFoundException fileNotFoundException) when (IsAddTestAttachmentException(fileNotFoundException))
             {
-                if (!IsAddTestAttachmentException(fileNotFoundException))
-                {
-                    throw;
-                }
-
-                // Safely close the application
-                _takeScreenshots = false;
-                base.UITestBaseTearDown();
+                SafelyCloseApplication();
             }
+        }
+
+        private void SafelyCloseApplication()
+        {
+            // Safely close the application
+            _takeScreenshots = false;
+            base.UITestBaseTearDown();
         }
 
         private bool IsAddTestAttachmentException(FileNotFoundException fileNotFoundException)
