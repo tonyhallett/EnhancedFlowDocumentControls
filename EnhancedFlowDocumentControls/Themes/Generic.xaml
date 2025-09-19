@@ -4,7 +4,6 @@
   xmlns:local="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls"
   xmlns:converters="clr-namespace:EnhancedFlowDocumentControls.Converters"
   xmlns:viewModel="clr-namespace:EnhancedFlowDocumentControls.ViewModel">
-
   <Style
     TargetType="local:FindMenu">
     <Setter Property="IsTabStop" Value="False" />
@@ -488,7 +487,6 @@
       </Setter.Value>
     </Setter>
   </Style>
-
   <Style
     TargetType="{x:Type local:FindTextBox}">
     <Setter Property="IsTabStop" Value="False" />
@@ -515,6 +513,7 @@
               Foreground="{TemplateBinding Foreground}"
               AllowDrop="True"
               BorderThickness="0"
+              CaretBrush="{TemplateBinding CaretBrush}"
               MaxLength="255"
               SelectionBrush="{TemplateBinding SelectionBrush}"
               SelectionOpacity="{TemplateBinding SelectionOpacity}"

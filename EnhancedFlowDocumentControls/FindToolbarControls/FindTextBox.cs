@@ -15,6 +15,15 @@ namespace EnhancedFlowDocumentControls.FindToolBarControls
 
         public static readonly DependencyProperty SelectionBrushProperty;
 
+        public Brush CaretBrush
+        {
+            get => (Brush)GetValue(CaretBrushProperty);
+            set => SetValue(CaretBrushProperty, value);
+        }
+
+        public static readonly DependencyProperty CaretBrushProperty =
+            DependencyProperty.Register(nameof(CaretBrush), typeof(Brush), typeof(FindTextBox), new PropertyMetadata(null));
+
         public Brush SelectionBrush
         {
             get => (Brush)GetValue(SelectionBrushProperty);

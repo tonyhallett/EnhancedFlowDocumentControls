@@ -92,9 +92,13 @@ Dependency properties.
 | HintFontStyle | FontStyles.Italic |
 | TextBoxWidth | 183 |
 | Foreground | SystemColors.ControlTextBrush|
-| Background | null ( for the caret ) |
+| Background | null|
+| CaretBrush | null|
 | SelectionBrush | TextBox.SelectionBrushProperty |
 | SelectionOpacity | TextBox.SelectionOpacityProperty |
+
+Note that a TextBox caret brush can come from the CaretBrush or be an inversion ( `new SolidColorBrush(Color.FromRgb(~color.R, ~color.G, ~color.B));`) of either the Background or SystemColors.WindowColor.
+
 
 FindNextPreviousButtons.
 
