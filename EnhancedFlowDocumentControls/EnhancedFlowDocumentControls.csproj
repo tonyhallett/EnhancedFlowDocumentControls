@@ -13,12 +13,13 @@
     <PackageProjectUrl>https://github.com/tonyhallett/EnhancedFlowDocumentControls</PackageProjectUrl>
     <Title>Enhanced Flow Document Controls, custom find toolbar.</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\ReadmeImages\**\*" Pack="True" PackagePath="ReadmeImages\" />
+    <None Include="..\videos\**\*" Pack="True" PackagePath="videos\" />
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
@@ -31,4 +32,12 @@
   <ItemGroup>
     <PackageReference Include="fasterflect" Version="3.0.0" />
   </ItemGroup>
+  <PropertyGroup>
+      <BeforePack>SetSdkTargetFrameworksForPack</BeforePack>
+  </PropertyGroup>
+  <Target Name="SetSdkTargetFrameworksForPack">
+      <PropertyGroup>
+          <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
+      </PropertyGroup>
+  </Target> 
 </Project>
