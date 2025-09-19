@@ -1,11 +1,11 @@
 ﻿using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Tools;
 using UIAutomationHelpers;
 using UITests.NUnit;
 using UITests.TestHelpers;
 
 namespace UITests.Tests.Comparisons
 {
-    // todo - occasional fails - use Retry
     [CommonComparisonTest]
     internal sealed class NoStateTest(string windowTypeName, FrameworkVersion frameworkVersion)
         : FindToolBarTestsBase(windowTypeName, frameworkVersion)
@@ -23,9 +23,10 @@ namespace UITests.Tests.Comparisons
             CloseFindToolbar();
             AssertClosed();
 
+            Thread.Sleep(100);
             ShowFindToolbar();
 
-            findTextBox = ControlFinder.FindFindTextBox(Window);
+            findTextBox = Retry.WhileNull(() => ControlFinder.FindFindTextBox(Window)).Result;
             Assert.That(findTextBox!.Text, Is.Empty);
             matchCaseMenuItem = MenuHelper.GetMatchCaseMenuItem(Window);
             Assert.That(matchCaseMenuItem.IsChecked, Is.False);

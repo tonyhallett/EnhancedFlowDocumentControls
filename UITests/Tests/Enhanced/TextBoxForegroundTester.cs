@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Tools;
 using UIAutomationHelpers;
 
 namespace UITests.Tests.Enhanced
@@ -11,14 +12,14 @@ namespace UITests.Tests.Enhanced
         {
             ControlFinder.FindFindButton(window)!.Click();
 
-            TextBox? findTextBox = ControlFinder.FindFindTextBox(window);
+            TextBox? findTextBox = Retry.WhileNull(() => ControlFinder.FindFindTextBox(window)).Result;
 
             AssertForegroundColorsEqual(findTextBox!, Color.FromArgb(0, Color.DarkBlue), window.Automation);
 
             RadioButton? pinkRadioButton = ControlFinder.FindPinkPaletteRadioButton(window);
             pinkRadioButton!.IsChecked = true;
 
-            AssertForegroundColorsEqual(findTextBox!, Color.FromArgb(0, Color.DeepPink), window.Automation);
+            _ = Retry.WhileException(() => AssertForegroundColorsEqual(findTextBox!, Color.FromArgb(0, Color.DeepPink), window.Automation), throwOnTimeout: true);
 
         }
 

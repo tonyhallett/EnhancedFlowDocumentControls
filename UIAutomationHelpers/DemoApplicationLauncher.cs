@@ -56,6 +56,15 @@ namespace UIAutomationHelpers
             => Path.Combine(binDirectory, isDebug ? "Debug" : "Release", GetFrameworkVersionDirectoryName(frameworkVersion), $"{projectName}.exe");
 
         private static string GetFrameworkVersionDirectoryName(FrameworkVersion frameworkVersion)
-            => frameworkVersion == FrameworkVersion.Net6Windows ? "net6.0-windows" : frameworkVersion.ToString().ToLower();
+        {
+            string directoryName = frameworkVersion.ToString().ToLower();
+            int windowsIndex = directoryName.IndexOf("windows");
+            if (windowsIndex > -1)
+            {
+                directoryName = directoryName[..windowsIndex] + ".0-windows";
+            }
+
+            return directoryName;
+        }
     }
 }

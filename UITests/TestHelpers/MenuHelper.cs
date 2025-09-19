@@ -1,4 +1,5 @@
 ﻿using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Tools;
 using UIAutomationHelpers;
 
 namespace UITests.TestHelpers
@@ -14,7 +15,7 @@ namespace UITests.TestHelpers
 
         public static MenuItem GetMatchCaseMenuItem(Window window)
         {
-            Menu? findMenu = ControlFinder.FindFindMenu(window);
+            Menu? findMenu = Retry.WhileNull(() => ControlFinder.FindFindMenu(window)).Result;
             MenuItem rootItem = findMenu!.Items[0];
             _ = rootItem.Expand();
             return rootItem.Items[1];

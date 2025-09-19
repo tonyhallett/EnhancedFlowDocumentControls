@@ -57,7 +57,7 @@ namespace UITests.Tests
 
         protected TextBox FocusFindTextBox()
         {
-            TextBox? findTextBox = ControlFinder.FindFindTextBox(Window);
+            TextBox? findTextBox = Retry.WhileNull(() => ControlFinder.FindFindTextBox(Window)).Result;
             findTextBox!.Focus();
             return findTextBox;
         }
@@ -77,6 +77,12 @@ namespace UITests.Tests
             Assert.That(selectedTextRange.GetText(-1), Is.EqualTo(expectedSelectedText));
             selectedTextRange.ExpandToEnclosingUnit(FlaUI.Core.Definitions.TextUnit.Word);
             Assert.That(selectedTextRange.GetText(-1), Is.EqualTo(expectedEnclosingWord));
+        }
+
+        [TearDown]
+        public void X()
+        {
+            base.UITestBaseTearDown();
         }
     }
 }

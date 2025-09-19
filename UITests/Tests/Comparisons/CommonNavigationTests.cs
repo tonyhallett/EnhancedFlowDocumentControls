@@ -47,6 +47,7 @@ namespace UITests.Tests.Comparisons
             navigationFocusAsserts.ForEach(navigationFocusAssert =>
             {
                 navigationFocusAssert.Navigation();
+                Thread.Sleep(100);
                 navigationFocusAssert.FocusedElementAssertion();
             });
 
