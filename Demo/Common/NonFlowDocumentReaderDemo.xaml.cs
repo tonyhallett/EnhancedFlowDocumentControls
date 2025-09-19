@@ -1,12 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace DemoCommon
+namespace Demo.Common
 {
     /// <summary>
     /// Interaction logic for NonFlowDocumentReaderDemo.xaml.
     /// </summary>
-    public partial class NonFlowDocumentReaderDemo : UserControl
+    internal sealed partial class NonFlowDocumentReaderDemo : UserControl
     {
         public NonFlowDocumentReaderDemo() => InitializeComponent();
 

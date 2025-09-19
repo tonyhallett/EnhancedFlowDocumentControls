@@ -1,8 +1,8 @@
 ﻿using System.Windows.Media;
 
-namespace DemoCommon
+namespace Demo.Common
 {
-    public sealed class Palette
+    internal sealed class Palette
     {
         public Brush MainBackground { get; set; }
 

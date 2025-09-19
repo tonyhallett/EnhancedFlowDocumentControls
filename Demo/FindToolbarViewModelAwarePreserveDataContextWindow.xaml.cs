@@ -1,4 +1,4 @@
-﻿using DemoCommon;
+﻿using Demo.Common;
 
 namespace Demo
 {

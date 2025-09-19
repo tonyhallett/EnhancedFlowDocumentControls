@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows;
 
-namespace DemoCommon
+namespace Demo.Common
 {
-    public class DemoWindow : Window
+    internal class DemoWindow : Window
     {
         public DemoWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             Uri uri = new Uri(
-                "/DemoCommon;component/DemoWindowResources.xaml",
+                "/Demo;component/Common/DemoWindowResources.xaml",
                 UriKind.Relative);
             ResourceDictionary loadedResourceDictionary = new ResourceDictionary()
             {

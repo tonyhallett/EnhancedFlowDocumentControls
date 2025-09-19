@@ -27,8 +27,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Settings.XamlStyler = Settings.XamlStyler
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoCommon", "DemoCommon\DemoCommon.csproj", "{720B6917-ED60-459C-998D-E3141E29E8D8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7EBA63CD-0963-4790-978A-DA504E6EF35E}"
 EndProject
 Global
@@ -57,10 +55,6 @@ Global
 		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{720B6917-ED60-459C-998D-E3141E29E8D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{720B6917-ED60-459C-998D-E3141E29E8D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{720B6917-ED60-459C-998D-E3141E29E8D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{720B6917-ED60-459C-998D-E3141E29E8D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,11 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DemoCommon
+namespace Demo.Common
 {
     /// <summary>
     /// Interaction logic for PaletteSwitcherControl.xaml.
     /// </summary>
-    public partial class PaletteSwitcherControl : UserControl
+    internal sealed partial class PaletteSwitcherControl : UserControl
     {
         public PaletteSwitcherControl() => InitializeComponent();
     }

@@ -3,12 +3,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace DemoCommon
+namespace Demo.Common
 {
     /// <summary>
     /// Interaction logic for DocumentNullSwitcher.xaml.
     /// </summary>
-    public partial class DocumentNullSwitcher : UserControl
+    internal sealed partial class DocumentNullSwitcher : UserControl
     {
         public DocumentNullSwitcher() => InitializeComponent();
 

@@ -2,12 +2,12 @@
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace DemoCommon
+namespace Demo.Common
 {
     /// <summary>
     /// Interaction logic for FlowDocumentReaderDemo.xaml.
     /// </summary>
-    public partial class FlowDocumentReaderDemo : UserControl
+    internal sealed partial class FlowDocumentReaderDemo : UserControl
     {
         public FlowDocumentReaderDemo() => InitializeComponent();
 

@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
-namespace DemoCommon
+namespace Demo.Common
 {
-    public sealed class PaletteSwitcher : INotifyPropertyChanged
+    internal sealed class PaletteSwitcher : INotifyPropertyChanged
     {
         private readonly Palette _bluePalette = new Palette
         {
