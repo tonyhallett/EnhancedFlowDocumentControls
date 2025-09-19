@@ -10,7 +10,7 @@ using UIAutomationHelpers;
 namespace UITests.Tests
 {
     internal abstract class FindToolBarTestsBase(string windowTypeName, FrameworkVersion frameworkVersion = FrameworkVersion.Net472)
-        : FlaUITestBase
+        : LongPathFailingTestScreenShotFixBase
     {
         private Window? _window;
 
@@ -77,12 +77,6 @@ namespace UITests.Tests
             Assert.That(selectedTextRange.GetText(-1), Is.EqualTo(expectedSelectedText));
             selectedTextRange.ExpandToEnclosingUnit(FlaUI.Core.Definitions.TextUnit.Word);
             Assert.That(selectedTextRange.GetText(-1), Is.EqualTo(expectedEnclosingWord));
-        }
-
-        [TearDown]
-        public void X()
-        {
-            base.UITestBaseTearDown();
         }
     }
 }
