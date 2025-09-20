@@ -357,6 +357,8 @@ Solution config | Demo   | EnhancedFlowControls | UITests | Tests  | VideoRecord
 Debug           | Debug  | Debug                | Release | Debug  | Debug
 UITests         | Release| Release              | Debug   | Debug  | Debug
 
+UITests should be run with the UITests solution configuration.
+
 UITests.csproj defines UITestsSolutionConfig
 ```xml
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
