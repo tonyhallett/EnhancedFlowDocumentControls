@@ -28,28 +28,9 @@ namespace UIAutomationHelpers
 
         private static string GetLatest(string binDirectory, FrameworkVersion frameworkVersion, string projectName)
         {
-            string debugPath = GetExePath(binDirectory, frameworkVersion, projectName, true);
             string releasePath = GetExePath(binDirectory, frameworkVersion, projectName, false);
-            bool debugPathExists = File.Exists(debugPath);
-            bool releasePathExists = File.Exists(releasePath);
-            if (debugPathExists && !releasePathExists)
-            {
-                return debugPath;
-            }
 
-            if (!debugPathExists && releasePathExists)
-            {
-                return releasePath;
-            }
-
-            if (debugPathExists && releasePathExists)
-            {
-                DateTime debugTime = File.GetLastWriteTime(debugPath);
-                DateTime releaseTime = File.GetLastWriteTime(releasePath);
-                return debugTime > releaseTime ? debugPath : releasePath;
-            }
-
-            throw new Exception($"Neither {debugPath} nor {releasePath} exists.");
+            return !File.Exists(releasePath) ? throw new Exception($"{releasePath} does not exist.") : releasePath;
         }
 
         private static string GetExePath(string binDirectory, FrameworkVersion frameworkVersion, string projectName, bool isDebug)

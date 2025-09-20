@@ -4,6 +4,7 @@ using FlaUI.Core.Tools;
 using FlaUI.TestUtilities;
 using FlaUI.UIA3;
 using UIAutomationHelpers;
+using UITests.TestHelpers;
 
 [assembly: RequiresThread(ApartmentState.STA)]
 
@@ -24,6 +25,11 @@ namespace UITests.Tests
 
         protected override Application StartApplication()
         {
+            if (!SolutionConfiguration.IsUITests)
+            {
+                throw new Exception("UITests must be run with the UITests solution configuration.");
+            }
+
             _ = NativeMethods.SetProcessDPIAware();
             IsNormal = windowTypeName.StartsWith("Normal");
             Application application = DemoApplicationLauncher.Launch(frameworkVersion, windowTypeName);

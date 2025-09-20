@@ -16,7 +16,7 @@ namespace UITests.Tests.Enhanced
 
             AssertForegroundColorsEqual(findTextBox!, Color.FromArgb(0, Color.DarkBlue), window.Automation);
 
-            RadioButton? pinkRadioButton = ControlFinder.FindPinkPaletteRadioButton(window);
+            RadioButton? pinkRadioButton = Retry.WhileNull(() => ControlFinder.FindPinkPaletteRadioButton(window)).Result;
             pinkRadioButton!.IsChecked = true;
 
             _ = Retry.WhileException(() => AssertForegroundColorsEqual(findTextBox!, Color.FromArgb(0, Color.DeepPink), window.Automation), throwOnTimeout: true);

@@ -347,3 +347,48 @@ Each enhanced flow control implements below so that the static `FindToolBarManag
         FindToolBarManager FindToolBarManager { get; }
     }
 ```
+
+# Solution configuration
+
+The UITests should run against the release version of EnhancedFlowControls.  As such there are two solution configurations.
+
+Solution config | Demo   | EnhancedFlowControls | UITests | Tests  | VideoRecorder
+----------------|--------|----------------------|---------|--------|---------------
+Debug           | Debug  | Debug                | Release | Debug  | Debug
+UITests         | Release| Release              | Debug   | Debug  | Debug
+
+UITests.csproj defines UITestsSolutionConfig
+```xml
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);UITestsSolutionConfig</DefineConstants>
+   </PropertyGroup>
+```
+
+accessible in code
+```cs
+    internal static class SolutionConfiguration
+    {
+#if UITestsSolutionConfig
+    public const bool IsUITests = true;
+#else
+        public const bool IsUITests = false;
+#endif
+    }
+```
+
+which will throw in the base test class - FindToolBarTestsBase
+```cs
+        protected override Application StartApplication()
+        {
+            if (!SolutionConfiguration.IsUITests)
+            {
+                throw new Exception("UITests must be run with the UITests solution configuration.");
+            }
+
+            _ = NativeMethods.SetProcessDPIAware();
+            IsNormal = windowTypeName.StartsWith("Normal");
+            Application application = DemoApplicationLauncher.Launch(frameworkVersion, windowTypeName);
+            _window = application.GetMainWindow(Automation);
+            return application;
+        }
+```

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFrameworks>net461;net471;net472;net48;net5.0-windows;net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <UseWPF>true</UseWPF>
     <Authors>TonyHUK</Authors>
@@ -33,11 +33,6 @@
     <PackageReference Include="fasterflect" Version="3.0.0" />
   </ItemGroup>
   <PropertyGroup>
-      <BeforePack>SetSdkTargetFrameworksForPack</BeforePack>
-  </PropertyGroup>
-  <Target Name="SetSdkTargetFrameworksForPack">
-      <PropertyGroup>
-          <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
-      </PropertyGroup>
-  </Target> 
+</PropertyGroup>
+ 
 </Project>
