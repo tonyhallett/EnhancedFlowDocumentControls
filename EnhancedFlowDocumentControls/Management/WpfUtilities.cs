@@ -16,6 +16,7 @@ namespace EnhancedFlowDocumentControls.Management
 
         public void AddPreviewKeyDownEnterOrExecuteHandler(Action handler)
         {
+            // todo - use a timer to find the textbox if not found, change Clear method
             _findTextBox = VisualTreeUtilities.FindByName<TextBox>(_customFindToolBar, "findTextBox");
             _previewKeyDownHandler = (_, e) =>
             {
@@ -27,6 +28,12 @@ namespace EnhancedFlowDocumentControls.Management
                 e.Handled = true;
                 handler();
             };
+
+            if (_findTextBox == null)
+            {
+                return;
+            }
+
             _findTextBox.PreviewKeyDown += _previewKeyDownHandler;
         }
 
@@ -66,9 +73,13 @@ namespace EnhancedFlowDocumentControls.Management
 
         public void Clear()
         {
-            _findTextBox.PreviewKeyDown -= _previewKeyDownHandler;
-            _previewKeyDownHandler = null;
-            _findTextBox = null;
+            // todo remove once have a timer for finding the find textbox
+            if (_findTextBox != null)
+            {
+                _findTextBox.PreviewKeyDown -= _previewKeyDownHandler;
+                _previewKeyDownHandler = null;
+                _findTextBox = null;
+            }
 
             _customFindToolBar.Loaded -= _loadedHandler;
             _loadedHandler = null;
