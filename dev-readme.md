@@ -394,3 +394,5 @@ which will throw in the base test class - FindToolBarTestsBase
             return application;
         }
 ```
+
+Building the solution in the UITests configuration will produce the EnhancedFlowControls nuget package.
