@@ -1,0 +1,26 @@
+﻿<demoCommon:DemoWindow
+  x:Class="Demo.NormalFlowDocumentScrollViewerWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:demoCommon="clr-namespace:Demo.Common"
+  Title="Normal FlowDocumentScrollViewer Demo"
+  mc:Ignorable="d">
+  <demoCommon:NonFlowDocumentReaderDemo>
+    <demoCommon:NonFlowDocumentReaderDemo.FlowControl>
+      <FlowDocumentScrollViewer
+        VerticalScrollBarVisibility="Auto">
+        <FlowDocumentScrollViewer.Document>
+          <FlowDocument>
+            <Paragraph>
+              <Run
+                Text="This is a simple example of a FlowDocument container without a stylable find toolbar." />
+            </Paragraph>
+          </FlowDocument>
+        </FlowDocumentScrollViewer.Document>
+      </FlowDocumentScrollViewer>
+    </demoCommon:NonFlowDocumentReaderDemo.FlowControl>
+  </demoCommon:NonFlowDocumentReaderDemo>
+</demoCommon:DemoWindow>

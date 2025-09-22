@@ -1,0 +1,28 @@
+﻿<demoCommon:DemoWindow
+  x:Class="Demo.NormalFlowDocumentReaderWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:demoCommon="clr-namespace:Demo.Common"
+  Title="Normal FlowDocumentReader Demo"
+  mc:Ignorable="d">
+  <demoCommon:FlowDocumentReaderDemo>
+    <demoCommon:FlowDocumentReaderDemo.FlowDocumentReader>
+      <FlowDocumentReader
+        BorderBrush="LightBlue"
+        BorderThickness="1"
+        SelectionBrush="LightBlue">
+        <FlowDocumentReader.Document>
+          <FlowDocument>
+            <Paragraph>
+              <Run
+                Text="This is a simple example of a FlowDocument container without a stylable find toolbar." />
+            </Paragraph>
+          </FlowDocument>
+        </FlowDocumentReader.Document>
+      </FlowDocumentReader>
+    </demoCommon:FlowDocumentReaderDemo.FlowDocumentReader>
+  </demoCommon:FlowDocumentReaderDemo>
+</demoCommon:DemoWindow>

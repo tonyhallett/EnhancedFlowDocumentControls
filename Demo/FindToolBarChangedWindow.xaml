@@ -1,0 +1,69 @@
+﻿<Window
+  x:Class="Demo.FindToolBarChangedWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:Demo"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
+  Title="FindToolBar changed demo"
+  Width="800"
+  Height="450"
+  mc:Ignorable="d">
+  <Window.Resources>
+    <findControls:FindToolBar
+      x:Key="NewFindToolbar"
+      AutomationProperties.AutomationId="changedFindToolBar">
+      <StackPanel
+        Orientation="Horizontal">
+        <findControls:FindTextBox
+          Background="Green"
+          Foreground="White" />
+        <findControls:FindNextPreviousButtons
+          Foreground="Blue" />
+      </StackPanel>
+    </findControls:FindToolBar>
+  </Window.Resources>
+  <DockPanel
+    LastChildFill="True">
+    <StackPanel
+      DockPanel.Dock="Top"
+      Orientation="Horizontal">
+      <Button x:Name="ChangeFindToolBarDelayedButton"
+        AutomationProperties.AutomationId="ChangeFindToolBarDelayedButton"
+        Click="ChangeDelayedClick">
+        Change delayed
+      </Button>
+      <Button x:Name="ChangeFindToolBarImmediateButton"
+        AutomationProperties.AutomationId="ChangeFindToolBarImmediateButton"
+        Click="ChangeClick">
+        Change
+      </Button>
+    </StackPanel>
+
+    <flowControls:EnhancedFlowDocumentReader x:Name="EnhancedFlowDocumentReader">
+      <flowControls:EnhancedFlowDocumentReader.Document>
+        <FlowDocument>
+          <Paragraph>
+            <Run
+              Text="This is a demo of FindToolBar Changed." />
+          </Paragraph>
+        </FlowDocument>
+      </flowControls:EnhancedFlowDocumentReader.Document>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+        <findControls:FindToolBar>
+          <StackPanel
+            Orientation="Horizontal">
+            <findControls:FindTextBox
+              Background="Yellow"
+              Foreground="Black" />
+            <findControls:FindNextPreviousButtons
+              Foreground="Orange" />
+          </StackPanel>
+        </findControls:FindToolBar>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
+    </flowControls:EnhancedFlowDocumentReader>
+  </DockPanel>
+</Window>

@@ -1,0 +1,27 @@
+﻿<Window
+  x:Class="Demo.IFindToolBarViewModelAwareAllowSearchingWhenEmptyTextWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:Demo"
+  xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
+  Width="800"
+  Height="450"
+  mc:Ignorable="d">
+  <flowControls:EnhancedFlowDocumentReader>
+    <flowControls:EnhancedFlowDocumentReader.Document>
+      <FlowDocument>
+        <Paragraph>
+          <Run
+            Text="This is a demo of AllowSearchingWhenEmptyText true" />
+        </Paragraph>
+      </FlowDocument>
+    </flowControls:EnhancedFlowDocumentReader.Document>
+    <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+      <local:IFindToolBarViewModelAwareAllowSearchingWhenEmptyText
+        AutomationProperties.AutomationId="replacedFindToolBar" />
+    </flowControls:EnhancedFlowDocumentReader.FindToolBar>
+  </flowControls:EnhancedFlowDocumentReader>
+</Window>

@@ -1,0 +1,71 @@
+﻿<demoCommon:DemoWindow
+  x:Class="Demo.FindToolbarViewModelAwarePreserveDataContextWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:Demo"
+  xmlns:demoCommon="clr-namespace:Demo.Common"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
+  Title="Demo IFindToolbarViewModelAware"
+  mc:Ignorable="d">
+  <DockPanel
+    LastChildFill="True">
+    <demoCommon:PaletteSwitcherControl
+      DockPanel.Dock="Top" />
+    <flowControls:EnhancedFlowDocumentReader>
+      <flowControls:EnhancedFlowDocumentReader.Document>
+        <FlowDocument>
+          <Paragraph>
+            <Run
+              Text="This is a demo of IFindToolBarViewModelAware" />
+          </Paragraph>
+        </FlowDocument>
+      </flowControls:EnhancedFlowDocumentReader.Document>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+        <findControls:FindToolBar
+          AutomationProperties.AutomationId="replacedFindToolBar">
+          <Border
+            Margin="5,1,0,1"
+            Padding="0"
+            Background="{Binding Background}"
+            BorderBrush="{Binding Border}"
+            BorderThickness="1"
+            SnapsToDevicePixels="true">
+            <StackPanel
+              Orientation="Horizontal">
+              <findControls:FindTextBox
+                Background="{Binding Background}"
+                Foreground="{Binding Text}"
+                HintText="Do it"
+                SelectionBrush="{Binding MainBackground}" />
+              <findControls:FindNextPreviousButtons
+                Foreground="{Binding PrevNext}" />
+              <findControls:FindMenu
+                DropDownGlyphBrush="{Binding DropDownGlyphBrush}"
+                DropDownStateBackground="{Binding DropDownStateBackground}"
+                DropDownStateBorderBrush="{Binding DropDownStateBorderBrush}"
+                DropDownStateGlyphBrush="{Binding DropDownStateGlyphBrush}"
+                MenuBackground="{Binding MenuBackground}"
+                MenuBorderBrush="{Binding MenuBorderBrush}"
+                MenuItemBackground="{Binding MenuItemBackground}"
+                MenuItemBorderBrush="{Binding MenuItemBorderBrush}"
+                MenuItemForeground="{Binding MenuItemForeground}"
+                MenuItemHighlightedBackground="{Binding MenuItemHighlightedBackground}"
+                MenuItemHighlightedBorderBrush="{Binding MenuItemHighlightedBorderBrush}"
+                MenuItemHighlightedForeground="{Binding MenuItemHighlightedForeground}"
+                SelectedGlyphBackground="{Binding SelectedGlyphBackground}"
+                SelectedGlyphBorderBrush="{Binding SelectedGlyphBorderBrush}"
+                SelectedGlyphBrush="{Binding SelectedGlyphBrush}" />
+            </StackPanel>
+          </Border>
+        </findControls:FindToolBar>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
+
+
+
+    </flowControls:EnhancedFlowDocumentReader>
+  </DockPanel>
+</demoCommon:DemoWindow>

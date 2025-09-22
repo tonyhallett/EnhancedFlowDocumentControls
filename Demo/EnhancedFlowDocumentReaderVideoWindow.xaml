@@ -1,0 +1,87 @@
+﻿<demoCommon:DemoWindow
+  x:Class="Demo.EnhancedFlowDocumentReaderVideoWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:demoCommon="clr-namespace:Demo.Common"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
+  Title="Enhanced FlowDocumentReader Demo"
+  mc:Ignorable="d">
+  <DockPanel
+    LastChildFill="True">
+    <demoCommon:PaletteSwitcherControl
+      DockPanel.Dock="Top" />
+    <flowControls:EnhancedFlowDocumentReader
+      BorderBrush="{Binding MainForeground}"
+      BorderThickness="1"
+      SelectionBrush="{Binding MainForeground}">
+      <flowControls:EnhancedFlowDocumentReader.Document>
+        <FlowDocument
+          FontFamily="{StaticResource fontFamily}">
+          <Paragraph>
+            <Run
+              Text="This is a simple example of a FlowDocumentReader with a stylable find toolbar." />
+          </Paragraph>
+        </FlowDocument>
+      </flowControls:EnhancedFlowDocumentReader.Document>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+        <findControls:FindToolBar
+          Margin="4,0,0,0"
+          Padding="4,1,4,1"
+          Background="{Binding Background}">
+          <StackPanel
+            Orientation="Horizontal">
+            <StackPanel.Resources>
+              <Style
+                x:Key="CommonFocusVisualStyle">
+                <Setter Property="Control.Template">
+                  <Setter.Value>
+                    <ControlTemplate>
+                      <Rectangle
+                        Margin="0"
+                        SnapsToDevicePixels="true"
+                        Stroke="{Binding Text}"
+                        StrokeDashArray="1 2"
+                        StrokeThickness="1" />
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </StackPanel.Resources>
+            <findControls:FindTextBox
+              Background="{Binding Background}"
+              Foreground="{Binding Text}"
+              HintText="Do it"
+              SelectionBrush="{Binding MainBackground}" />
+            <findControls:FindNextPreviousButtons
+              FocusVisualStyle="{StaticResource ResourceKey=CommonFocusVisualStyle}"
+              GlyphBrush="{Binding GlyphBrush}"
+              StateBackground="{Binding StateBackground}"
+              StateBorderBrush="{Binding StateBorderBrush}"
+              StateGlyphBrush="{Binding StateGlyphBrush}" />
+            <findControls:FindMenu
+              DropDownFocusVisualStyle="{StaticResource ResourceKey=CommonFocusVisualStyle}"
+              DropDownGlyphBrush="{Binding GlyphBrush}"
+              DropDownStateBackground="{Binding StateBackground}"
+              DropDownStateBorderBrush="{Binding StateBorderBrush}"
+              DropDownStateGlyphBrush="{Binding StateGlyphBrush}"
+              MenuBackground="{Binding MenuBackground}"
+              MenuBorderBrush="{Binding MenuBorderBrush}"
+              MenuItemBackground="{Binding MenuItemBackground}"
+              MenuItemBorderBrush="{Binding MenuItemBorderBrush}"
+              MenuItemForeground="{Binding MenuItemForeground}"
+              MenuItemHighlightedBackground="{Binding MenuItemHighlightedBackground}"
+              MenuItemHighlightedBorderBrush="{Binding MenuItemHighlightedBorderBrush}"
+              MenuItemHighlightedForeground="{Binding MenuItemHighlightedForeground}"
+              SelectedGlyphBackground="{Binding SelectedGlyphBackground}"
+              SelectedGlyphBorderBrush="{Binding SelectedGlyphBorderBrush}"
+              SelectedGlyphBrush="{Binding SelectedGlyphBrush}" />
+          </StackPanel>
+        </findControls:FindToolBar>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
+    </flowControls:EnhancedFlowDocumentReader>
+  </DockPanel>
+</demoCommon:DemoWindow>

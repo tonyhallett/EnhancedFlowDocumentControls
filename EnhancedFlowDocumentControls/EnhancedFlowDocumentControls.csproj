@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
+    <LangVersion>7.3</LangVersion>
+    <UseWPF>true</UseWPF>
+    <Authors>TonyHUK</Authors>
+    <Description> Enhanced FlowDocumentReader, FlowDocumentScrollViewer and FlowDocumentPageViewer for custom find toolbars.</Description>
+    <Copyright>Copyright © 2025 Tony Hallett</Copyright>
+    <RepositoryUrl>https://github.com/tonyhallett/EnhancedFlowDocumentControls.git</RepositoryUrl>
+    <PackageTags>FindToolBar;FlowDocument;Find;Toolbar;FlowDocumentReader;FlowDocumentScrollViewer;FlowDocumentPageViewer</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/tonyhallett/EnhancedFlowDocumentControls</PackageProjectUrl>
+    <Title>Enhanced Flow Document Controls, custom find toolbar.</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>True</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\ReadmeImages\**\*" Pack="True" PackagePath="ReadmeImages\" />
+    <None Include="..\videos\**\*" Pack="True" PackagePath="videos\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>Tests</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="fasterflect" Version="3.0.0" />
+  </ItemGroup>
+  <PropertyGroup>
+</PropertyGroup>
+ 
+</Project>

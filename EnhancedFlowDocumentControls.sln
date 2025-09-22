@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnhancedFlowDocumentControls", "EnhancedFlowDocumentControls\EnhancedFlowDocumentControls.csproj", "{6244AD21-074B-45FE-9D75-A718387A626A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{8EAADED9-F711-4371-A396-BA40EE590856}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UITests", "UITests\UITests.csproj", "{D95C4138-B12F-4262-8C87-A642DF98F0ED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8EAADED9-F711-4371-A396-BA40EE590856} = {8EAADED9-F711-4371-A396-BA40EE590856}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoRecorder", "VideoRecorder\VideoRecorder.csproj", "{00C8282A-FE09-401E-9085-0B7437305FD3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8EAADED9-F711-4371-A396-BA40EE590856} = {8EAADED9-F711-4371-A396-BA40EE590856}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIAutomationHelpers", "UIAutomationHelpers\UIAutomationHelpers.csproj", "{D3C89EB4-CD05-4688-B454-2BD9354E31F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		dev-readme.md = dev-readme.md
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+		Settings.XamlStyler = Settings.XamlStyler
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7EBA63CD-0963-4790-978A-DA504E6EF35E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		UITests|Any CPU = UITests|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6244AD21-074B-45FE-9D75-A718387A626A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6244AD21-074B-45FE-9D75-A718387A626A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6244AD21-074B-45FE-9D75-A718387A626A}.UITests|Any CPU.ActiveCfg = Release|Any CPU
+		{6244AD21-074B-45FE-9D75-A718387A626A}.UITests|Any CPU.Build.0 = Release|Any CPU
+		{8EAADED9-F711-4371-A396-BA40EE590856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EAADED9-F711-4371-A396-BA40EE590856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EAADED9-F711-4371-A396-BA40EE590856}.UITests|Any CPU.ActiveCfg = Release|Any CPU
+		{8EAADED9-F711-4371-A396-BA40EE590856}.UITests|Any CPU.Build.0 = Release|Any CPU
+		{D95C4138-B12F-4262-8C87-A642DF98F0ED}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{D95C4138-B12F-4262-8C87-A642DF98F0ED}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{D95C4138-B12F-4262-8C87-A642DF98F0ED}.UITests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95C4138-B12F-4262-8C87-A642DF98F0ED}.UITests|Any CPU.Build.0 = Debug|Any CPU
+		{00C8282A-FE09-401E-9085-0B7437305FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00C8282A-FE09-401E-9085-0B7437305FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00C8282A-FE09-401E-9085-0B7437305FD3}.UITests|Any CPU.ActiveCfg = Release|Any CPU
+		{00C8282A-FE09-401E-9085-0B7437305FD3}.UITests|Any CPU.Build.0 = Release|Any CPU
+		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.UITests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3C89EB4-CD05-4688-B454-2BD9354E31F5}.UITests|Any CPU.Build.0 = Debug|Any CPU
+		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.UITests|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBA63CD-0963-4790-978A-DA504E6EF35E}.UITests|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AF90F132-EE6C-485A-A575-8F15AC5A15F6}
+	EndGlobalSection
+EndGlobal

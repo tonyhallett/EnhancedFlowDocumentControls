@@ -1,0 +1,59 @@
+﻿<demoCommon:DemoWindow
+  x:Class="Demo.OriginalDataContextWindow"
+  x:ClassModifier="internal"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:Demo"
+  xmlns:demoCommon="clr-namespace:Demo.Common"
+  xmlns:findControls="clr-namespace:EnhancedFlowDocumentControls.FindToolBarControls;assembly=EnhancedFlowDocumentControls"
+  xmlns:flowControls="clr-namespace:EnhancedFlowDocumentControls.FlowDocumentControls;assembly=EnhancedFlowDocumentControls"
+  Title="Demo OriginalDataContext"
+  mc:Ignorable="d">
+  <DockPanel
+    LastChildFill="True">
+    <demoCommon:PaletteSwitcherControl
+      DockPanel.Dock="Top" />
+    <flowControls:EnhancedFlowDocumentReader>
+      <flowControls:EnhancedFlowDocumentReader.Document>
+        <FlowDocument>
+          <Paragraph>
+            <Run
+              Text="This is a demo of FindToolBarViewModel.OriginalDataContext" />
+          </Paragraph>
+        </FlowDocument>
+      </flowControls:EnhancedFlowDocumentReader.Document>
+      <flowControls:EnhancedFlowDocumentReader.FindToolBar>
+        <Border
+          Margin="5,1,0,1"
+          Padding="0"
+          Background="{Binding OriginalDataContext.Background}"
+          BorderBrush="{Binding OriginalDataContext.Border}"
+          BorderThickness="1"
+          SnapsToDevicePixels="true">
+          <StackPanel
+            Orientation="Horizontal">
+            <TextBox x:Name="findTextBox"
+              Width="100"
+              Background="{Binding OriginalDataContext.Background}"
+              Foreground="{Binding OriginalDataContext.Text}"
+              Text="{Binding FindText, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+              Command="{Binding NextCommand}"
+              Background="Transparent"
+              Foreground="{Binding OriginalDataContext.PrevNext}">
+              Prev
+            </Button>
+            <Button
+              Command="{Binding PreviousCommand}"
+              Background="Transparent"
+              Foreground="{Binding OriginalDataContext.PrevNext}">
+              Next
+            </Button>
+          </StackPanel>
+        </Border>
+      </flowControls:EnhancedFlowDocumentReader.FindToolBar>
+    </flowControls:EnhancedFlowDocumentReader>
+  </DockPanel>
+</demoCommon:DemoWindow>
